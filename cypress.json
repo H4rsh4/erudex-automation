@@ -1,0 +1,10 @@
+{
+    "defaultCommandTimeout": 10000,
+    "execTimeout": 100000,
+    "pageLoadTimeout": 100000,
+    "taskTimeout": 100000,
+    "env": {
+      "url": "https://demo-app.erudex.com/"
+    },
+    "projectId": "1aotdk"
+}
