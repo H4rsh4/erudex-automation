@@ -6,5 +6,7 @@
     "env": {
       "url": "https://demo-app.erudex.com/"
     },
-    "projectId": "1aotdk"
+    "projectId": "1aotdk",
+    "viewportHeight": 720,
+    "viewportWidth": 1280
 }
