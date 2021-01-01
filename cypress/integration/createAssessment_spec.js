@@ -4,7 +4,7 @@
 const constantVars = require('../fixtures/baseData.json')
 
 //Assignment Variables
-const ASSIGNMENT_NAME = 'Test Assignment 8'
+const ASSIGNMENT_NAME = 'Test Assessment 8'
 const CLASS           = 'Class 12'
 const SUBJECT         = 'Physics'
 const DIFFICULTY      = 'Easy'
