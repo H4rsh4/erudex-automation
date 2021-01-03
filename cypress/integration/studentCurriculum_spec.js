@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const constantVars = require('../../fixtures/example.json')
+const constantVars = require('../fixtures/baseData.json')
 
 describe('My First test', () => {
     it('Login', ()=>{
