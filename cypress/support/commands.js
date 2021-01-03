@@ -25,8 +25,8 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 //SignIn Function
-Cypress.Commands.add(signIn, (Username, Password) => {
-    const constantVars = require('../fixtures/baseData')  
+Cypress.Commands.add("signIn", (URL, Username, Password) => {
+    cy.visit(URL)
     cy.get('.login-form [type="text"]')
           .type(Username)
           .should('have.value', Username)
@@ -38,14 +38,12 @@ Cypress.Commands.add(signIn, (Username, Password) => {
   })
 
 //Logout Fx
-Cypress.Commands.add(logOut, (loElement)=>{
+Cypress.Commands.add("logOut", (logElement)=>{
     /*
         Logs out after 2 secs 
         using the given element
     */
-    //logout
     cy.wait(2000)
-    //cy.get('[ng-click="logout()"]')
-    cy.get(loElement)
+    cy.get(logElement)
       .click()
 })
