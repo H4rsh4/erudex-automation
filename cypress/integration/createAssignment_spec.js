@@ -4,14 +4,14 @@
 const constantVars = require('../fixtures/baseData')
 
 describe('Create and Push Activity', ()=>{
-    /*it('Signin', ()=>{
+    it('Signin', ()=>{
        cy.signIn(constantVars.URL+'login/index.html?',
                  constantVars.teacherUsername,
                  constantVars.teacherPassword);
-    });*/
+    });
 
     it('Reach Create Assignment Page', ()=>{
-        cy.visit(constantVars.URL)
+        //cy.visit(constantVars.URL)
         //get Activity button
         cy.get('.dash-blk > .icon-assignment')
           .trigger('click')
@@ -42,7 +42,7 @@ describe('Create and Push Activity', ()=>{
         
     })
     
-    /*it('Log Out', ()=>{
+    it('Log Out', ()=>{
         cy.logOut('[ng-click="logout()"]')
-    })*/
+    })
 });

@@ -17,7 +17,7 @@ describe('Loop test', ()=>{
               constantVars.teacherUsername,
               constantVars.teacherPassword);
   });
-  it('Reach Create Assignment Page', ()=>{
+  it('Reach Create Assessment Page', ()=>{
     //cy.visit(constantVars.URL)
     //get Assignment button
     cy.get('.dash-blk > .icon-assessment')
@@ -26,7 +26,7 @@ describe('Loop test', ()=>{
     cy.get('[href="#/assessment/create"]')
       .click({force:true})
   })
-  it('Assignment Setup', ()=>{
+  it('Assessment Setup', ()=>{
     cy.get('input#assessmentName')
       .type(ASSIGNMENT_NAME)
     cy.get(':nth-child(6) > .form-control')
