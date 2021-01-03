@@ -2,7 +2,7 @@
 
 //Used fixture file for storing Info 
 
-const constantVars = require('../../fixtures/example')
+const constantVars = require('../fixtures/baseData')
 
 context('Login Tests', () =>{
     beforeEach(() => {
