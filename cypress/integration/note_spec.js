@@ -37,7 +37,7 @@ describe('My First test', () => {
           .eq(0)
           .click({force:true})
     });
-    it('Add Note', () => {
+    it('Add Note and Save', () => {
         let time = new Date().toLocaleString()
         cy.wait(10000)
         cy.contains('New Note')
@@ -47,11 +47,28 @@ describe('My First test', () => {
         cy.contains('Save')
             .click()
         cy.wait(1000)
-        cy.get('.note-text').pop().then(function(text) {
+        cy.get('.note-text').then(function(text) {
           var note = text.text()
           expect(note).to.contain(time)
         })
     })
+
+    it('Add Note and Cancel', () => {
+      let time = new Date().toLocaleString()
+      cy.wait(10000)
+      cy.contains('New Note')
+          .click()
+      cy.get('#newNoteText')
+          .type(time)
+      cy.contains('Cancel')
+          .click()
+      cy.wait(1000)
+      cy.get('.note-text').then(function(text) {
+        var note = text.text()
+        expect(note).to.not.contain(time)
+      })
+  })
+
     it('Log User Out', ()=>{
         cy.wait(2000)
         cy.get('[ng-click="logout()"]')
