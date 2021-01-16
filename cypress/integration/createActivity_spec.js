@@ -1,17 +1,20 @@
 //Create&Push button throws Upload error
 //xhr POST command getting aborted while testing; couldn't reproduce while checking manually
+import ActivityPage from '../support/pageObjects/ActivityPage.js'
+import AssigningPage from '../support/pageObjects/AssigningPage.js';
+const credentials = require('../fixtures/cred.json')
 const constantVars = require('../fixtures/baseData')
+const activityData = require('../fixtures/activityData.json')
+const ActivityPage = new ActivityPage();
+const AssigningPage = new AssigningPage();
 
-const ACTIVITY_NAME = 'tets';
-const CLASS         = 'Class 12';
 
 describe('Create and Push Activity', ()=>{
     it('Signin', ()=>{
-       cy.signIn(constantVars.URL+'login/index.html?',
-                 constantVars.teacherUsername,
-                 constantVars.teacherPassword);
+       cy.signIn(credentials.orgURL+'login/index.html?',
+                 credentials.teacherUsername,
+                 credentials.teacherPassword);
     });
-
     it('Reach Create Activity Page', ()=>{
         //cy.visit(constantVars.URL)
         //get Activity button
@@ -21,32 +24,31 @@ describe('Create and Push Activity', ()=>{
         cy.get('[href="#/activity/create"]')
           .click({force:true})
     })
-
     it('Create Activity', ()=>{
         //Name
-        cy.get('#txtAssignmentName')
-          .type(ACTIVITY_NAME)
+        ActivityPage.getActivityName()
+                    .type(activityData.Name)
         //Select Class
-        cy.get('select#selclass')
-          .select(CLASS)
+        ActivityPage.getClass()
+                    .select(activityData.Class)
         //Subject
-        cy.get('select#selSubject')
-          .select('Physics');
+        ActivityPage.getSubjectName()
+                    .select(activityData.Subject);
         //Chapter
-        cy.get('select#Select1')
-          .select('12 . Atoms');
+        ActivityPage.getChapter()
+                    .select(activityData.Chapter);
         //Type Description
-        cy.get('.cke_wysiwyg_div.cke_reset.cke_enable_context_menu.cke_editable.cke_editable_themed.cke_contents_ltr.cke_show_borders')
-          .type('Some Desc');
+        ActivityPage.getDescription()
+                    .type(activityData.Desc);
         //Resources
-        cy.get('[ng-click="addResourceLink()"]')
-          .click()
+        ActivityPage.getResources()
+                    .click()
         //View one resource
-        cy.get('i.fa.fa-eye.resource-preview-icon')
-          .first()
-          .click()
-        cy.get('[ng-click="closeModal()"]')
-          .click()
+        ActivityPage.getResourcepreview()
+                    .first()
+                    .click()
+        ActivityPage.getClosePreview()
+                    .click()
         //wait for dialog to close
         cy.wait(2000)
         //Add 5 of each resources
@@ -63,39 +65,46 @@ describe('Create and Push Activity', ()=>{
         cy.get('[ng-click="finishSelection()"]')
           .click()
         //Delete one resource
-        cy.get('.fa.fa-trash.resource-delete-icon[ng-click="deleteResource($index)"]')
-          .first()
-          .click()
+        ActivityPage.getDeleteResource()
+                    .first()
+                    .click()
         //End of Resource
         
     })
     it('Push Activity', ()=>{
       //Push Button
-      cy.get('#aCreateAndPush')
-        .click()
-      cy.get('[ng-change="onSectionChecked(section)"]')
-        .check()
+      ActivityPage.getCreatePushButton()
+                  .click()
+      //ActivityPage.getCheckSection
+      //        .check()
+      AssigningPage.getSectionCheckBox()
+                    .click()
       //Start Date
-      cy.get('i.fa.fa-calendar')
-        .first()
-        .click()
-      cy.get('td.day.ng-binding.ng-scope.current')
-        .click()
-      cy.get('span.hour.current')
-        .click()
-      cy.get('span.minute.current')
-        .click()
-  
+      AssigningPage.getCalendar()
+                  .first()
+                  .click()
+      AssigningPage.getDate()
+                   .click()    
+      AssigningPage.getHour()
+                   .click()
+      AssigningPage.getMinute()
+                   .click()  
       //End Date
-      cy.get('i.fa.fa-calendar')
-        .last()
-        .click()
-      cy.get('td.day.ng-binding.ng-scope.future > :nth-child(2)')
+      AssigningPage.getCalendar()
+                   .last()
+                   .click()
+      AssigningPage.getDate()
+                   .click()    
+      AssigningPage.getHour()
+                   .click()
+      AssigningPage.getMinute()
+                   .click()  
+      /*cy.get('td.day.ng-binding.ng-scope.future > :nth-child(2)')
         .click()
       cy.contains('10:00 AM')
         .click()
       cy.contains('10:30 AM')
-        .click()
+        .click()*/
       //Final Push
       //cy.get('[ng-click="submitPush()"]')
       //  .click()

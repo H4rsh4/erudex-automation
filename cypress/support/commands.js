@@ -24,17 +24,20 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+import Signin from '../support/pageObjects/Signin.js'
+
 //SignIn Function
 Cypress.Commands.add("signIn", (URL, Username, Password) => {
+    const SignIn = new SignIn();
     cy.visit(URL)
-    cy.get('.login-form [type="text"]')
+    SignIn.getUsername()
           .type(Username)
           .should('have.value', Username)
-      cy.get('.login-form [type="password"]')
+    SignIn.getPassword()
           .type(Password)
           .should('have.value', Password)
-      cy.get('.login-form .login-button')
-          .click()
+    SignIn.getSubmit()
+          .click()  
   })
 
 //Logout Fx

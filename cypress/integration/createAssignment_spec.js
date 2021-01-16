@@ -1,47 +1,41 @@
 //Upload Error when attempting to Push
 //Same Error as CreateActivity_spec
+import AssignmentPage from '../support/pageObjects/AssignmentsPage.js'
+import IndexPage from '../support/pageObjects/IndexPage.js'
 
+const credentials = require('../fixtures/cred.json')
 const constantVars = require('../fixtures/baseData')
+const assignData = require('../fixtures/assignData.json')
+const IndexPage = new IndexPage()
+const AssignmentPage = new AssignmentPage()
+
 
 describe('Create and Push Activity', ()=>{
     it('Signin', ()=>{
-       cy.signIn(constantVars.URL+'login/index.html?',
-                 constantVars.teacherUsername,
-                 constantVars.teacherPassword);
+       cy.signIn(credentials.orgURL+'login/index.html?',
+                 credentials.teacherUsername,
+                 credentials.teacherPassword);
     });
-
     it('Reach Create Assignment Page', ()=>{
-        //cy.visit(constantVars.URL)
-        //get Activity button
-        cy.get('.dash-blk > .icon-assignment')
-          .trigger('click')
-        //reach add Activity Page
-        cy.get('[href="#/assignment/create"]')
-          .click({force:true})
+        IndexPage.getAssignment()
+        IndexPage.getCreateAssignment()
     })
     it('Create Assignment', ()=>{
-        //Name
-        cy.get('#txtAssignmentName')
-          .type('Assignment Name')
-        //Select Class
-        cy.get('select#selclass')
-          .select('Class 12')
-        //Subject
-        cy.get('select#selSubject')
-          .select('Physics');
-        //Chapter
-        cy.get('select#Select1')
-          .select('12 . Atoms');
-        //Type Description
-        cy.get('.cke_wysiwyg_div.cke_reset.cke_enable_context_menu.cke_editable.cke_editable_themed.cke_contents_ltr.cke_show_borders')
-          .type('Some Desc');
+        AssignmentPage.getAssignmentName()
+                      .type(assignData.Name)
+        AssignmentPage.getClass()
+                      .select(assignData.class)
+        AssignmentPage.getSubjectName()
+                      .select(assignData.Subject)
+        AssignmentPage.getChapter()
+                      .select(assignData.Chapter)
+        AssignmentPage.getDescription()
+                      .type(assignData.Desc)
     })
     it('Push Assignment', ()=>{
-        cy.get('#aCreateAndPush')
-          .click()
-        
+        AssignmentPage.getCreatePushButton()
+                      .click()  
     })
-    
     it('Log Out', ()=>{
         cy.logOut('[ng-click="logout()"]')
     })
