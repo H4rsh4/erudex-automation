@@ -1,12 +1,12 @@
 class Signin {
   getUsername() {
-    return cy.get('input[name="username"]');
+    return cy.get('.login-form [type="text"]');
   }
   getPassword() {
-    return cy.get('input[name="password"]');
+    return cy.get('.login-form [type="password"]');
   }
   getSubmit() {
-    return cy.get('[type="submit"]');
+    return cy.get('.login-form .login-button');
   }
   getPopup() {
     return cy.get("div.button.success.radius");

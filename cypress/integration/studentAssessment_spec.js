@@ -20,7 +20,8 @@ describe('Create and Push Activity', ()=>{
     it('Take Test', ()=>{
         //Get the Answers
         const answers = constantVars.qid;
-        //and initialize an Array for loop
+        //and initialize an Array for loop/
+        //add length to fixture
         const randArray = Array.from({length: 5})
         cy.wrap(randArray)
           .each((el, idx, li)=>{
@@ -29,6 +30,8 @@ describe('Create and Push Activity', ()=>{
               .then(($qid)=>{
                 //Process the String for qid
                 let questiontxt = $qid.text();
+                //qid QID:
+                //qid QID:12187
                 let pos = questiontxt.indexOf('QID:');
                 let qid = questiontxt.slice(pos+5, -1);
                 //select the appropriate option

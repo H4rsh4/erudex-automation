@@ -28,12 +28,14 @@ import Signin from '../support/pageObjects/Signin.js'
 
 //SignIn Function
 Cypress.Commands.add("signIn", (URL, Username, Password) => {
-    const SignIn = new SignIn();
+    const SignIn =new Signin();
     cy.visit(URL)
     SignIn.getUsername()
+          .should("be.visible")
           .type(Username)
           .should('have.value', Username)
     SignIn.getPassword()
+          .should("be.visible")
           .type(Password)
           .should('have.value', Password)
     SignIn.getSubmit()

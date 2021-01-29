@@ -1,0 +1,13 @@
+{
+  "username":"eru.teacher1",
+  "password":"eru.teacher1",
+  "subject":"Mathematics",
+  "assignmentname":"Assignemnt1",
+  "class":"Class 12",
+  "startdate": "11",
+  "starthour":"9:00 AM",
+  "startminute":"9:50 AM",
+  "enddate":"12",
+  "endhour":"10:00 AM",
+  "endminute": "10:55 AM"
+}

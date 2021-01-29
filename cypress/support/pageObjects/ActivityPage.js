@@ -26,6 +26,16 @@ class ActivityPage {
     getDeleteResource() {
         return cy.get('.fa.fa-trash.resource-delete-icon[ng-click="deleteResource($index)"]')
     }
+    getClosePreview() {
+        cy.get('[ng-click="closeModal()"]')
+    }
+    getCreatePushButton() {
+        return cy.get("#aCreateAndPush");
+    }
+    getCheckSection() {
+        return cy.get('[ng-change="onSectionChecked(section)"]')
+    }
+    
 
 }
 export default ActivityPage;
