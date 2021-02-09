@@ -26,10 +26,12 @@
 
 import Signin from '../support/pageObjects/Signin.js'
 
+const CREDENTIALS = require('../fixtures/Credentials.json')
+
 //SignIn Function
-Cypress.Commands.add("signIn", (URL, Username, Password) => {
+Cypress.Commands.add("Signin", ( Username, Password) => {
     const SignIn =new Signin();
-    cy.visit(URL)
+    cy.visit(CREDENTIALS.URL+'login/index.html?')
     SignIn.getUsername()
           .should("be.visible")
           .type(Username)
@@ -43,13 +45,12 @@ Cypress.Commands.add("signIn", (URL, Username, Password) => {
   })
 
 //Logout Fx
-Cypress.Commands.add("logOut", (logElement)=>{
+Cypress.Commands.add("Logout", ()=>{
     /*
         Logs out after 2 secs 
-        using the given element
     */
     cy.wait(2000)
-    cy.get(logElement)
+    cy.get('[ng-click="logout()"]')
       .click()
 })
 

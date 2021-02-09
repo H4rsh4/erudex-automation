@@ -1,23 +1,19 @@
 /*
 Author : Rajasekhar, Harsha
+Unfinished
 */
 import AssignmentPage from "../../support/pageObjects/AssignmentsPage";
 import IndexPage from "../../support/pageObjects/IndexPage";
 import Signin from "../../support/pageObjects/Signin";
 
-describe("testing", () => {
-  beforeEach(function () {
-    cy.fixture("StudentDataAssignment").then(function (data) {
-      this.data = data;
-    });
-  });
-  it("signin", function () {
-    const signin = new Signin();
-    cy.visit(Cypress.env("url"));
-    signin.getUsername().first().should("be.visible").type(this.data.username);
-    signin.getPassword().first().type(this.data.password);
-    signin.getSubmit().first().click();
-    signin.getPopup().contains("Yes").should("be.visible").click();
+const CREDENTIALS = require('../fixtures/Credentials.json')
+const ASSIGNMENT_DATA = require('../fixtures/Assignment-Data.json')
+const IndexPage = new IndexPage();
+const AssignmentPage = new AssignmentPage();
+
+describe("Student Assignment", () => {
+  it("Signin", function () {
+    cy.Signin(CREDENTIALS.Username, CREDENTIALS.Password);
   });
   it("Assignment", function () {
     const index = new IndexPage();
@@ -29,7 +25,7 @@ describe("testing", () => {
     //     }
     // })
     const assignment = new AssignmentPage();
-    assignment.getSubject().contains(this.data.subject).click();
+    assignment.getSubject().contains(ASSIGNMENT_DATA.subject).click();
     assignment.getAssignment().last().click();
     // if (assignment.getTeacherAttachment()) {
     //   assignment.getTeacherAttachment().click();
@@ -53,4 +49,7 @@ describe("testing", () => {
     assignment.getSubmit().contains("Submit").last().click();
     cy.get(".button").contains("Yes").should("be.visible").click();
   });
+  it('Logout', ()=>{
+    cy.Logout();
+  })
 });

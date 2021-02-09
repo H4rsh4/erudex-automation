@@ -1,11 +1,17 @@
-class IndexPage {
-  getAssignment() {
+class IndexPage{
+  getAssessment(){
+    return cy.get('span.icon-assessment')
+  }
+  getAssignment(){
     return cy.get("span.icon-assignment");
   }
-  getDropdownAssignment() {
+  getCurriculum(){
+    return cy.get('span.icon-curriculum')
+  }
+  getDropdownAssignment(){
     return cy.get('[data-dropdown="dropdownAssignment"]');
   }
-  getCreateAssignment() {
+  getCreateAssignment(){
     return cy.get('[ui-sref="assignmentCreate"]');
   }
 }
