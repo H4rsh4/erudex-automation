@@ -3,39 +3,34 @@ Authors: Rishi, Harsha
 To-Do: Similar code structre as others using pageobjects and fixture data
 */
 
-/// <reference types="cypress" />
+import IndexPage from '../support/pageObjects/IndexPage'
+import CurriculumPage from '../support/pageObjects/CurriculumPage'
 
-const constantVars = require('../fixtures/baseData.json')
+const CREDENTIALS = require('../fixtures/Credentials.json')
+const CURRICULUM_DATA = require('../fixtures/Curriculum-Data.json')
+const IndexPage = new IndexPage();
+const CurriculumPage = new CurriculumPage();
 
 //const curriculumData = require('../../fixtures/organized/Curriculum-Data')
 
 describe('My First test', () => {
     it('Login', ()=>{
-        cy.visit(constantVars.URL+'login/index.html?')
-        //Support Functions didn't work for some reason
-        //cy.Teacher(constantVars.teacherUsername, constantVars.teacherPassword);
-        cy.get('.login-form [type="text"]')
-          .type(constantVars.studentUsername)
-          .should('have.value', constantVars.studentUsername)
-        cy.get('.login-form [type="password"]')
-          .type(constantVars.studentPassword)
-          .should('have.value', constantVars.studentPassword)
-        cy.get('.login-form .login-button').click()
-        cy.wait(4000)
+      cy.Signin(CREDENTIALS.teacher.Username,
+                CREDENTIALS.teacher.Password);
     });
     it('TC1,2 Curriculum Pre-Steps', () => {
-        cy.get("span.icon-curriculum")
-          .click()
+        IndexPage.getCurriculum()
+                 .click()
         cy.wait(2000)
-        cy.get(".subject-button")
-          .contains("Mathematics")
-          .click()
+        CurriculumPage.getSubject()
+                      .contains(CURRICULUM_DATA.subject)
+                      .click()
         cy.get(".expand-arrow")
           .click()
         cy.get(".fa.fa-arrow-circle-left")
           .click()
         cy.get('.nice-select').first().click({force:true})
-        cy.get('ul.list > li').contains('CBSE-Class 12').click({force:true})
+        cy.get('ul.list > li').contains(CURRICULUM_DATA.class).click({force:true})
     });
     it('TC3,4,6 View the features and topic  videos of a selected chapter',() => {
         cy.get('li>div.resource-img-wrapper')

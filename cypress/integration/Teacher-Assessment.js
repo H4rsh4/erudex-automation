@@ -5,71 +5,136 @@ Todo: Consistency and fixture data
 
 /// <reference types="cypress" />
 
+import IndexPage from "../support/pageObjects/IndexPage.js"
+import TeacherAssessmentPage from "../support/pageObjects/TeacherAssessmentPage.js"
+
 //fixture data
-const constantVars = require('../fixtures/baseData.json')
+const CREDS = require('../fixtures/Credentials.json')
+const assessmentData = require('../fixtures/Assessment-data.json')
+//files module
+const fs = require('fs')
 
-//Assignment Variables
-const ASSIGNMENT_NAME = 'Test Assessment 8'
-const CLASS           = 'Class 12'
-const SUBJECT         = 'Physics'
-const DIFFICULTY      = 'Easy'
-//const DURATION        = ''
-//const MARKS           = ''
+const IP = new IndexPage();
+const AssessmentPage = new TeacherAssessmentPage();
 
-describe('Loop test', ()=>{
-  it('Signin', ()=>{
-    cy.signIn(constantVars.URL+'login/index.html?',
-              constantVars.teacherUsername,
-              constantVars.teacherPassword);
-  });
+const qidData = {};
+const ansText = {
+  "(1)":"option_1",
+  "(2)":"option_2",
+  "(3)":"option_3",
+  "(4)":"option_4",
+}
+
+describe('Teacher-Student Assessment Pipeline', ()=>{
+  //it('Signin', ()=>{
+  //  cy.Signin(CREDS.teacher.Username,
+  //            CREDS.teacher.Password);
+  //});
   it('Reach Create Assessment Page', ()=>{
-    //cy.visit(constantVars.URL)
-    //get Assignment button
-    cy.get('.dash-blk > .icon-assessment')
-      .trigger('click')
-    //reach add Assignment Page
-    cy.get('[href="#/assessment/create"]')
-      .click({force:true})
+    cy.visit(CREDS.URL)
+    IP.getAssessment()
+             .trigger('click')
+   //reach add Assignment Page
+    IP.getCreateAssessment()
+             .click({force:true})
   })
   it('Assessment Setup', ()=>{
-    cy.get('input#assessmentName')
-      .type(ASSIGNMENT_NAME)
-    cy.get(':nth-child(6) > .form-control')
-      .select(CLASS)
+    AssessmentPage.getAssessmentName()
+      .type(assessmentData.name)
+    AssessmentPage.getClass()
+      .select(assessmentData.class)
     cy.wait(2000)
-    cy.get('[ng-show="createInput.languageId === languageConstants.ENGLISH"]')
-      .select(SUBJECT)
-    cy.get(':nth-child(10) > .form-control')
-      .select(DIFFICULTY)
+    AssessmentPage.getSubject()
+      .select(assessmentData.subject)
+    AssessmentPage.getDifficulty()
+      .select(assessmentData.difficulty)
              
   })
   it('Select Number of Questions and Press OK', ()=>{
-    cy.get('.e-button.radius[ng-click="selectMethod(genMethod.manual)"]')
+    AssessmentPage.getManualSelection()
       .click()
-    cy.get('.table-sticky-header.has-form > table.f-table.striped tbody .ng-scope > .no-select > .e-button.radius.ng-binding', {timeout:10000})
+    //Question Table
+    //extra wait time as the table can take a while to load
+    cy.wait(5000)
+    AssessmentPage.getQuestionsTable()
       .each(($el, index, $list) =>{
-        if(index > 5) return;
-        else $el.trigger('click')
+        if(index > assessmentData.numberOfQuestions) return;
+        else {
+          cy.get('td.ng-binding[ng-click="viewQuestion(rec)"]').eq(index).then(($obj)=>{
+            let ques = $obj.text();
+            let pos = ques.indexOf('(');
+            let qid = ques.slice(pos+1, -1);
+            cy.get('.correct-mcq-option .ques-opt').eq(index).then(($obj)=>{
+              let anstxt = $obj.text();
+              let ans = ansText[anstxt]
+              qidData[qid] = ans
+              //console.log(qid, ans, qidData[qid])
+            })
+          })
+          $el.trigger('click')
+        }
       })
-    cy.get('[ng-click="okay()"]')
+    AssessmentPage.getOkay()
       .scrollIntoView()
       .click({force: true})
-    cy.get(' .columns.medium-12.small-12 > [ng-click="createAssessment()"]')
-      .scrollIntoView()
-      .click({force: true})
-    cy.wait(4000)
+    })
+    it('Write qidData to file', ()=>{
+      //todo
+      //or put student here as well
+      cy.log('nah fam')
+    })
+    it('Push Assessment',()=>{
+    //cy.get(' .columns.medium-12.small-12 > [ng-click="createAssessment()"]')
+    //  .scrollIntoView()
+     // .click({force: true})
+    //cy.wait(4000)
+    AssessmentPage.getOkay()
+            .click({force: true})
+    AssessmentPage.getCreateandPush()
+        .click({force: true})
+    AssessmentPage.getCheckbox()
+        .check()
+            .should('be.checked')
+    AssessmentPage.getPushCalender1()
+        .click()
+    AssessmentPage.getDateandTime()
+        .contains(assessmentData.pushDate)
+            .click()
+    AssessmentPage.getCalenderHour()
+        .contains(assessmentData.pushHour1)
+            .click()
+    AssessmentPage.getCalenderMinute()
+        .contains(assessmentData.pushMin1)
+            .click()
+    AssessmentPage.getPushCalender2()
+        .click()
+    AssessmentPage.getDateandTime1()
+        .contains(assessmentData.pushDate)
+            .click()
+    AssessmentPage.getCalenderHour1()
+        .contains(assessmentData.pushHour2)
+            .click()
+    AssessmentPage.getCalenderMinute1()
+        .contains(assessmentData.pushMin2)
+            .click()
+    AssessmentPage.getCancel()
+        .click()
     })
   //Assertions Fail
-  /*it('Check Created assignment', ()=>{
-    cy.visit(constantVars.URL+'teacher/index.html#/assessment/list')
+  it('Check Created assignment', ()=>{
+    cy.get('a[ui-sref="assessmentList"]').eq(0).click({force:true})
+    cy.get('[ng-click="showPushedAssessments()"]').click()
     cy.wait(2000)
     //cy.get(' table.f-table.striped.coursework-list-table > tbody > tr > td:nth-child(2)')
     //Getting error that the element is empty?
-    cy.get('.f-table > tbody > :nth-child(1) > :nth-child(2)')
-    cy.contains('Test Assignment 8')
-      .should('have.value', ASSIGNMENT_NAME)
-  })*/
-  it('Log Out', ()=>{
-        cy.logOut('[ng-click="logout()"]')
+    //cy.get('.f-table > tbody > :nth-child(1) > :nth-child(2)')
+    cy.get('tr.ng-scope:nth-child(1) > td.ng-binding:nth-child(2)').then(($obj)=>{
+      let tex = $obj.text()
+      tex = (tex.slice(tex.indexOf('\n')+2, tex.lastIndexOf('\n'))).trim()
+      expect(tex).to.eq(assessmentData.name)
     })
+  })
+  //it('Log Out', ()=>{
+  //      cy.Logout()
+  //  })
 })

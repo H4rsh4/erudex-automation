@@ -1,4 +1,4 @@
-class AssessmentPage {
+class StudentAssessmentPage{
     getAssessment(Assignment_Name){
         return cy.get(`[title="${Assignment_Name}"]`).parent()
     }
@@ -9,4 +9,4 @@ class AssessmentPage {
         return cy.get('[ng-click="(timer.value > 0) && saveQuestion(currentPage, currentQuestion, \'answered\')"]')
     }
 }
-export default AssessmentPage;
+export default StudentAssessmentPage;

@@ -5,7 +5,6 @@ To-Do:
 */
 import orgAdmin from '../support/pageObjects/orgAdmin.js'
 
-const constantVars = require('../fixtures/baseData')
 const credentials = require('../fixtures/cred.json')
 const orgAdminPage = new orgAdmin();
 const initArray = (Length)=>{
@@ -31,11 +30,10 @@ const pressTimeButtons = (numberOfButtons) =>{
 }
 
 describe('Create and Push Activity', ()=>{
-  /*it('Signin', ()=>{
-      cy.signIn(credentials.orgURL+'login/index.html?',
-                credentials.OrgAdminUsername,
+  it('Signin', ()=>{
+      cy.signIn(credentials.OrgAdminUsername,
                 credentials.OrgAdminPassword);
-  });*/ 
+  });
   it('Time Buttons', () => {
     cy.visit(credentials.orgURL)
     pressTimeButtons(3)
@@ -93,7 +91,7 @@ describe('Create and Push Activity', ()=>{
     returnToDashboard()
   })
   
-  /*it('Log Out', ()=>{
+  it('Log Out', ()=>{
       cy.logOut('[ng-click="logout()"]')
-  })*/
+  })
 });

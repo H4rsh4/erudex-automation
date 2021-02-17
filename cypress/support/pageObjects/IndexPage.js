@@ -2,6 +2,9 @@ class IndexPage{
   getAssessment(){
     return cy.get('span.icon-assessment')
   }
+  getCreateAssessment(){
+    return cy.get('[href="#/assessment/create"]')
+  }
   getAssignment(){
     return cy.get("span.icon-assignment");
   }

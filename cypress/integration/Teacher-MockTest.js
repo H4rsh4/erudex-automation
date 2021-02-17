@@ -5,6 +5,10 @@ describe('Create and Push Activity', ()=>{
        cy.Signin(credentials.teacherUsername,
                  credentials.teacherPassword);
     });
+    it('Reach Mocktest', ()=>{
+        
+    })
+    
     it('Log Out', ()=>{
         cy.Logout()
     });

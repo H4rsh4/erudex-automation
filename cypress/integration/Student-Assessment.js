@@ -12,6 +12,7 @@ const AssessmentPage = new AssessmentPage();
 
 describe('Create and Push Activity', ()=>{
     it('Signin', ()=>{
+      //Custom CYpress commands; from ../support/commands.js
        cy.Signin(CREDENTIALS.student.Username,
                  CREDENTIALS.student.Password);
     });
