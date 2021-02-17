@@ -1,15 +1,29 @@
 class TeacherAssessmentPage {
+    getAssessmentList(){
+        return cy.get('a[ui-sref="assessmentList"]').eq(0)
+    }
+    getPushedAssessments(){
+        return cy.get('[ng-click="showPushedAssessments()"]')
+    }
+    getFirstAssignment(){
+        return cy.get('tr.ng-scope:nth-child(1) > td.ng-binding:nth-child(2)')
+    }
+    assertName($obj,name){
+        let tex = $obj.text()
+      tex = (tex.slice(tex.indexOf('\n')+2, tex.lastIndexOf('\n'))).trim()
+      expect(tex).to.eq(name)
+    }
     getAssessmentName(){
         return cy.get('input#assessmentName')
     }
-    getClass(){
-        return cy.get(':nth-child(6) > .form-control')
+    getClass(Class){
+        return cy.get(':nth-child(6) > .form-control').select(Class)
     }
-    getSubject(){
-        return cy.get('[ng-show="createInput.languageId === languageConstants.ENGLISH"]')
+    getSubject(subject){
+        return cy.get('[ng-show="createInput.languageId === languageConstants.ENGLISH"]').select(subject)
     }
-    getDifficulty(){
-        return cy.get(':nth-child(10) > .form-control')
+    getDifficulty(diff){
+        return cy.get(':nth-child(10) > .form-control').select(diff)
     }
     getManualSelection(){
         return cy.get('.e-button.radius[ng-click="selectMethod(genMethod.manual)"]')
@@ -17,7 +31,6 @@ class TeacherAssessmentPage {
     getQuestionsTable(){
         return cy.get('.table-sticky-header.has-form > table.f-table.striped tbody .ng-scope > .no-select > .e-button.radius.ng-binding', {timeout:10000})
     }
-    //Murali
     getOkay(){
         return cy.get('[ng-click="okay()"]')
     }
@@ -25,17 +38,23 @@ class TeacherAssessmentPage {
     {
         return cy.get('[ng-click="createAndPush()"]')
     }
+    getPush(){
+        return cy.get('[ng-click="submitPush()"]')
+    }
     getCheckbox()
     {
         return cy.get('[type="checkbox"]')
     }
-    getPushCalender1()
+    getStartCalender()
     {
         return cy.get('.fa-calendar').eq(0)
     }
-    getDateandTime()
+    getEndCalender()
     {
-        return cy.get('.datetimepicker .table-condensed tr:nth-child(5) td')
+        return cy.get('.fa-calendar').eq(1)
+    }
+    getActiveDate(date){
+        return cy.get('td.day:not(.disabled):not(.future):not(.past)').contains(String(date))
     }
     getCalenderHour()
     {
@@ -44,14 +63,6 @@ class TeacherAssessmentPage {
     getCalenderMinute()
     {
         return cy.get('.minute:nth-child(10)')
-    }
-    getPushCalender2()
-    {
-        return cy.get('.fa-calendar').eq(1)
-    }
-    getDateandTime1()
-    {
-        return cy.get('.datetimepicker .table-condensed tr:nth-child(5) td')
     }
     getCalenderHour1()
     {
