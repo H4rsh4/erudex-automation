@@ -6,8 +6,8 @@ import AssignmentPage from "../../support/pageObjects/AssignmentsPage";
 import IndexPage from "../../support/pageObjects/IndexPage";
 import Signin from "../../support/pageObjects/Signin";
 
-const CREDENTIALS = require('../fixtures/Credentials.json')
-const ASSIGNMENT_DATA = require('../fixtures/Assignment-Data.json')
+const CREDENTIALS = require("../fixtures/Credentials.json");
+const ASSIGNMENT_DATA = require("../fixtures/Assignment-Data.json");
 const IndexPage = new IndexPage();
 const AssignmentPage = new AssignmentPage();
 
@@ -49,7 +49,7 @@ describe("Student Assignment", () => {
     assignment.getSubmit().contains("Submit").last().click();
     cy.get(".button").contains("Yes").should("be.visible").click();
   });
-  it('Logout', ()=>{
+  it("Logout", () => {
     cy.Logout();
-  })
+  });
 });

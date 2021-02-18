@@ -24,75 +24,72 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import Signin from '../support/pageObjects/Signin.js'
+import Signin from "../support/pageObjects/Signin.js";
 
-const CREDENTIALS = require('../fixtures/Credentials.json')
+const CREDENTIALS = require("../fixtures/Credentials.json");
 
 //SignIn Function
-Cypress.Commands.add("Signin", ( Username, Password) => {
-    const SignIn =new Signin();
-    cy.visit(CREDENTIALS.URL+'login/index.html?')
-    SignIn.getUsername()
-          .should("be.visible")
-          .type(Username)
-          .should('have.value', Username)
-    SignIn.getPassword()
-          .should("be.visible")
-          .type(Password)
-          .should('have.value', Password)
-    SignIn.getSubmit()
-          .click()  
-  })
+Cypress.Commands.add("Signin", (Username, Password) => {
+  const SignIn = new Signin();
+  cy.visit(CREDENTIALS.URL + "login/index.html?");
+  SignIn.getUsername()
+    .should("be.visible")
+    .type(Username)
+    .should("have.value", Username);
+  SignIn.getPassword()
+    .should("be.visible")
+    .type(Password)
+    .should("have.value", Password);
+  SignIn.getSubmit().click();
+});
 
 //Logout Fx
-Cypress.Commands.add("Logout", ()=>{
-    /*
+Cypress.Commands.add("Logout", () => {
+  /*
         Logs out after 2 secs 
     */
-    cy.wait(2000)
-    cy.get('[ng-click="logout()"]')
-      .click()
-})
+  cy.wait(2000);
+  cy.get('[ng-click="logout()"]').click();
+});
 
 //Sourced from cypress.io blog
-Cypress.Commands.add('goOnline', ()=>{
-    cy.log('**go online**')
+Cypress.Commands.add("goOnline", () => {
+  cy.log("**go online**")
     .then(() => {
       // https://chromedevtools.github.io/devtools-protocol/1-3/Network/#method-emulateNetworkConditions
-      return Cypress.automation('remote:debugger:protocol',
-        {
-          command: 'Network.emulateNetworkConditions',
-          params: {
-            offline: false,
-            latency: -1,
-            downloadThroughput: -1,
-            uploadThroughput: -1,
-          },
-        })
+      return Cypress.automation("remote:debugger:protocol", {
+        command: "Network.emulateNetworkConditions",
+        params: {
+          offline: false,
+          latency: -1,
+          downloadThroughput: -1,
+          uploadThroughput: -1,
+        },
+      });
     })
     .then(() => {
-      return Cypress.automation('remote:debugger:protocol',
-        {
-          command: 'Network.disable',
-        })
-    })
-})
+      return Cypress.automation("remote:debugger:protocol", {
+        command: "Network.disable",
+      });
+    });
+});
 
-Cypress.Commands.add('goOffline', ()=>{
-    cy.log('**go offline**')
-      .then(() => {
-        return Cypress.automation('remote:debugger:protocol', {command: 'Network.enable',})
-      })
-      .then(() => {
-        return Cypress.automation('remote:debugger:protocol',
-            {
-                command: 'Network.emulateNetworkConditions',
-                params: {
-                offline: true,
-                latency: -1,
-                downloadThroughput: -1,
-                uploadThroughput: -1,
-            },
-        })
-})
-})
+Cypress.Commands.add("goOffline", () => {
+  cy.log("**go offline**")
+    .then(() => {
+      return Cypress.automation("remote:debugger:protocol", {
+        command: "Network.enable",
+      });
+    })
+    .then(() => {
+      return Cypress.automation("remote:debugger:protocol", {
+        command: "Network.emulateNetworkConditions",
+        params: {
+          offline: true,
+          latency: -1,
+          downloadThroughput: -1,
+          uploadThroughput: -1,
+        },
+      });
+    });
+});

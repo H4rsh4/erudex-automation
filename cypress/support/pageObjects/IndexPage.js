@@ -1,20 +1,23 @@
-class IndexPage{
-  getAssessment(){
-    return cy.get('span.icon-assessment')
+class IndexPage {
+  getAssessment() {
+    return cy.get("span.icon-assessment");
   }
-  getCreateAssessment(){
-    return cy.get('[href="#/assessment/create"]')
+  getCreateAssessment() {
+    return cy.get('[href="#/assessment/create"]');
   }
-  getAssignment(){
+  getAssignment() {
     return cy.get("span.icon-assignment");
   }
-  getCurriculum(){
-    return cy.get('span.icon-curriculum')
+  getCurriculum() {
+    return cy.get("span.icon-curriculum");
   }
-  getDropdownAssignment(){
+  getActivity() {
+    return cy.get('[href="#/activities"]');
+  }
+  getDropdownAssignment() {
     return cy.get('[data-dropdown="dropdownAssignment"]');
   }
-  getCreateAssignment(){
+  getCreateAssignment() {
     return cy.get('[ui-sref="assignmentCreate"]');
   }
 }

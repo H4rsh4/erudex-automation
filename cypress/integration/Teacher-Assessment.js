@@ -15,9 +15,8 @@ const IP = new IndexPage();
 const AssessmentPage = new TeacherAssessmentPage();
 
 describe("Teacher-Student Assessment Pipeline", () => {
-  it('Signin', ()=>{
-    cy.Signin(CREDS.teacher.Username,
-              CREDS.teacher.Password);
+  it("Signin", () => {
+    cy.Signin(CREDS.teacher.Username, CREDS.teacher.Password);
   });
   it("Reach Create Assessment Page", () => {
     IP.getAssessment().trigger("click");
@@ -50,30 +49,30 @@ describe("Teacher-Student Assessment Pipeline", () => {
     AssessmentPage.getActiveDate(assessmentData.pushDate).click();
     AssessmentPage.getCalenderHour().contains(assessmentData.pushHour1).click();
     AssessmentPage.getCalenderMinute()
-                  .contains(assessmentData.pushMin1)
-                  .click();
+      .contains(assessmentData.pushMin1)
+      .click();
     AssessmentPage.getEndCalender().click();
     AssessmentPage.getActiveDate(assessmentData.pushDate).click();
     AssessmentPage.getCalenderHour1()
-                  .contains(assessmentData.pushHour2)
-                  .click();
+      .contains(assessmentData.pushHour2)
+      .click();
     AssessmentPage.getCalenderMinute1()
-                  .contains(assessmentData.pushMin2)
-                  .click();
+      .contains(assessmentData.pushMin2)
+      .click();
     //AssessmentPage.getCancel().click()
-    AssessmentPage.getPush().click()
+    AssessmentPage.getPush().click();
   });
-  it('Check Pushed Assessment', ()=>{
+  it("Check Pushed Assessment", () => {
     //Wait for the assignment to be pushed
-    cy.wait(4000)
+    cy.wait(4000);
     AssessmentPage.getAssessmentList().click({ force: true });
     AssessmentPage.getPushedAssessments().click();
     cy.wait(2000);
     AssessmentPage.getFirstAssignment().then(($obj) => {
       AssessmentPage.assertName($obj, assessmentData.name);
     });
-  })
-  it('Log Out', ()=>{
-        cy.Logout()
-    })
+  });
+  it("Log Out", () => {
+    cy.Logout();
+  });
 });
