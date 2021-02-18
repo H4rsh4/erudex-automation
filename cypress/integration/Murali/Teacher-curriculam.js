@@ -1,0 +1,60 @@
+/*
+Author: Murali
+*/
+/// <reference types="Cypress" />
+import Teacherobj from '../../support/pageObjects/Teacherobj'
+const TeacherOBJ = new Teacherobj()
+const Constvarbl = require('../../fixtures/ConstVarbl.json')
+describe('My First Test Suite', function() 
+{
+    it('Signin', ()=>{
+        cy.Signin(Constvarbl.TeacherUserName,
+            Constvarbl.TeacherPassword);
+     }); 
+it('Curriculam page',function() {
+    TeacherOBJ.getCurriculam()
+        .click()
+    TeacherOBJ.getGrades()
+        .click({force: true})    
+    TeacherOBJ.getSubChemistry()
+        .click()
+    TeacherOBJ.getSubMathematics()
+        .click()
+    TeacherOBJ.getSubPhysics()
+        .click()
+    TeacherOBJ.getarrowleft()
+        .click()
+    TeacherOBJ.getarrowleft()
+        .click()
+    TeacherOBJ.getrefresh()
+        .click()
+    TeacherOBJ.getLessonDocument()
+        .click({ force: true })
+    cy.wait(10000)
+    TeacherOBJ.getPdfNext()
+        .click()
+    TeacherOBJ.getPdfZoomOut()
+        .click()
+    TeacherOBJ.getPdfZoomIn()
+        .click()
+    TeacherOBJ.getPdfFitpage()
+        .click()
+    TeacherOBJ.getChapterContent()
+        .click()
+    TeacherOBJ.getchaptercontentclose()
+        .click()
+    TeacherOBJ.getChapterFeature()
+        .click()
+    TeacherOBJ.getChapterNotes()
+        .click()
+    TeacherOBJ.getNotesArea()
+        .click()
+    TeacherOBJ.getNotesTyping()
+        .type(Constvarbl.videoNotes)
+    TeacherOBJ.getSaveNote()
+        .click()
+    TeacherOBJ.getNavigateback()
+        .click()
+    cy.Logout()
+})
+})
