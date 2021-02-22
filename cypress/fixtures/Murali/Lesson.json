@@ -1,0 +1,20 @@
+{
+    "TeacherUserName":"erudt.01",
+    "TeacherPassword":"erudt.01",
+    "Language":"English",
+    "Class":"Class 10",
+    "Subject1":"English",
+    "Chapter1":"4. Films And Theatre",
+    "chapter1":"3 . Human Relations",
+    "Topic1":"6. Modals",
+    "Lessonplan":"Start Lesson Plan Wizard",
+    "Date1":"14",
+    "Date2":"15",
+    "AddRemove":"Add/Remove",
+    "Organisation":"ERUDEX",
+    "URL": "https://demo-app.erudex.com/",
+    "StartDate":"Start Date",
+    "LessonDelivery":"Lesson Delivery",
+    "LessonClosure":"Lesson Closure",
+    "LearningObjectives":"Learning Objectives"
+}

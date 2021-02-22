@@ -1,15 +1,22 @@
 class Signin {
-  getUsername() {
-    return cy.get('.login-form [type="text"]');
+    getUsername() 
+    {
+      return cy.get('.login-form > [type="text"]')
+    }
+    getPassword() 
+    {
+      return cy.get('.login-form [type="password"]')
+    }
+    getSignin() 
+    {
+      return cy.contains('Sign In')
+    }
+    getSuccess() 
+    {
+      return cy.get('.success')
+    }
+    getSubmit(){
+      return cy.get('.login-form .login-button')
+    }
   }
-  getPassword() {
-    return cy.get('.login-form [type="password"]');
-  }
-  getSubmit() {
-    return cy.get(".login-form .login-button");
-  }
-  getPopup() {
-    return cy.get("div.button.success.radius");
-  }
-}
-export default Signin;
+  export default Signin

@@ -61,17 +61,11 @@ class TeacherAssessmentPage {
       .get("td.day:not(.disabled):not(.future):not(.past)")
       .contains(String(date));
   }
-  getCalenderHour() {
-    return cy.get(".hour:nth-child(18)");
+  getCalenderHour(data) {
+    return cy.get(".hour:not(disabled)").contains(String(data));
   }
-  getCalenderMinute() {
-    return cy.get(".minute:nth-child(10)");
-  }
-  getCalenderHour1() {
-    return cy.get(".hour:nth-child(22)");
-  }
-  getCalenderMinute1() {
-    return cy.get(".minute:nth-child(10)");
+  getCalenderMinute(data) {
+    return cy.get(".minute:not(disabled)").contains(String(data));
   }
   getCancel() {
     return cy.get('[ng-click="cancelPush()"]');

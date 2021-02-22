@@ -1,4 +1,4 @@
-class TeacherAssignmentPage {
+class AssignmentPage {
   getSubject() {
     return cy.get(".subject-button");
   }
@@ -47,40 +47,8 @@ class TeacherAssignmentPage {
   getPrint() {
     return cy.get('a[ng-click="onPrint()"]');
   }
-  getCreateandPush() {
+  getCreatePushButton() {
     return cy.get("#aCreateAndPush");
   }
-  getPush() {
-    return cy.get('[ng-click="submitPush()"]');
-  }
-  getCheckbox() {
-    return cy.get('[type="checkbox"]');
-  }
-  getStartCalender() {
-    return cy.get(".fa-calendar").eq(0);
-  }
-  getEndCalender() {
-    return cy.get(".fa-calendar").eq(1);
-  }
-  getActiveDate(date) {
-    return cy
-      .get("td.day:not(.disabled):not(.future):not(.past)")
-      .contains(String(date));
-  }
-  getCalenderHour(data) {
-    return cy.get(".hour:not(disabled)").contains(String(data));
-  }
-  getCalenderMinute(data) {
-    return cy.get(".minute:not(disabled)").contains(String(data));
-  }
-  /*getCalenderHour1() {
-    return cy.get(".hour:nth-child(22)");
-  }
-  getCalenderMinute1() {
-    return cy.get(".minute:nth-child(10)");
-  }*/
-  getCancel() {
-    return cy.get('[ng-click="cancelPush()"]');
-  }
 }
-export default TeacherAssignmentPage;
+export default AssignmentPage;

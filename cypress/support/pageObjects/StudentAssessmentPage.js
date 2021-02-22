@@ -1,6 +1,9 @@
 class StudentAssessmentPage {
+  getSubject(subject){
+    return cy.get(`.subject-button.${subject}`)
+  }
   getAssessment(Assignment_Name) {
-    return cy.get(`[title="${Assignment_Name}"]`).parent();
+    return cy.get(`[title="${Assignment_Name}"]`).parent().last();
   }
   startAssessment() {
     return cy.get('[ng-click="onStartAssessment()"]');

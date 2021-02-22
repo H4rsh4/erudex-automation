@@ -28,6 +28,10 @@ import Signin from "../support/pageObjects/Signin.js";
 
 const CREDENTIALS = require("../fixtures/Credentials.json");
 
+Cypress.Commands.add("Curriculum", ()=>{
+    
+  cy.get('.icon-curriculum.dash-img').click()
+})
 //SignIn Function
 Cypress.Commands.add("Signin", (Username, Password) => {
   const SignIn = new Signin();
@@ -49,7 +53,7 @@ Cypress.Commands.add("Logout", () => {
         Logs out after 2 secs 
     */
   cy.wait(2000);
-  cy.get('[ng-click="logout()"]').click();
+  cy.get('[ng-click="logout()"]').click({multiple:true,force:true});
 });
 
 //Sourced from cypress.io blog

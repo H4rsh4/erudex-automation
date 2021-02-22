@@ -15,5 +15,8 @@ class orgAdmin {
         $obj.find("button.MuiButtonBase-root").click();
       });
   }
+  getGraph(){
+    return cy.get('rect')
+  }
 }
 export default orgAdmin;
