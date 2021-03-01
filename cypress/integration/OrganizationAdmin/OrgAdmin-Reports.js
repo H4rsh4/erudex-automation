@@ -3,9 +3,9 @@ Author: Harsha
 To-Do:
 - Hover over graphs
 */
-import orgAdmin from "../support/pageObjects/orgAdmin.js";
+import orgAdmin from "../../support/pageObjects/orgAdmin.js";
 
-const credentials = require("../fixtures/Credentials.json");
+const credentials = require("../../fixtures/Credentials.json");
 const orgAdminPage = new orgAdmin();
 
 const initArray = (Length) => {

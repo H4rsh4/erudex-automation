@@ -2,12 +2,12 @@ class Curriculam
 {
     getGrades()
     {
-        return cy.get('ul li.option').contains('IIT-Class 12')
+        return cy.get('ul li.option').contains('CBSE-Class 12')
     }
-    getSubChemistry()
-    {
-        return cy.get('.subject-button.Chemistry ')
-    }
+    //getSubChemistry()
+    //{
+      //  return cy.get('.subject-button.Chemistry ')
+    //}
     getSubMathematics()
     {
         return cy.get('.subject-button.Mathematics')
@@ -24,10 +24,10 @@ class Curriculam
     {
         return cy.get('.fa.fa-refresh')
     }
-    getLessonDocument()
-    {
-        return cy.get('li>div.resource-img-wrapper')
-    }
+    //getLessonDocument()
+    //{
+    //    return cy.get('li>div.resource-img-wrapper').eq(0)
+    //}
     getPdfNext()
     {
         return cy.get('[ng-click="pdfViewer.goNextPage()"]')

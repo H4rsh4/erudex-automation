@@ -42,11 +42,11 @@ class DataEntry
     }
     getGrade()
     {
-        return cy.get('select').eq(3).select('0')
+        return cy.get('select').eq(3).select('1')
     }
     getSubject()
     {
-        return cy.get('select').eq(4).select('0')
+        return cy.get('select').eq(4).select('3')
     }
     getLevel()
     {
@@ -66,23 +66,23 @@ class DataEntry
     }
     getChapter()
     {
-        return cy.get('select').eq(13).select('0')
+        return cy.get('select').eq(13).select('1')
     }
     getChapterQuiz()
     {
-        return cy.get('select').eq(6).select('2')
+        return cy.get('select').eq(6).select('1')
     }
     getQuizTopic()
     {
-        return cy.get('select').eq(7).select('1')
+        return cy.get('select').eq(7).select('5')
     }
     getQuizSubTopic()
     {
-        return cy.get('select').eq(8).select('1')
+        return cy.get('select').eq(8).select('0')
     }
     getTopic()
     {
-        return cy.get('select').eq(14).select('1')
+        return cy.get('select').eq(14).select('5')
     }
     getDifficulty()
     {
@@ -154,19 +154,19 @@ class DataEntry
     }
     getAddGrade()
     {
-        return cy.get('select').eq(12).select('0')
+        return cy.get('select').eq(12).select('1')
     }
     getAddSubject()
     {
-        return cy.get('select').eq(13).select('0')
+        return cy.get('select').eq(13).select('3')
     }
     getAddChapter()
     {
-        return cy.get('select').eq(14).select('0')
+        return cy.get('select').eq(14).select('1')
     }
     getAddTopic()
     {
-        return cy.get('select').eq(15).select('1')
+        return cy.get('select').eq(15).select('5')
     }
     getAddDifficulty()
     {
@@ -270,11 +270,11 @@ class DataEntry
     }
     getAssessClass()
     {
-        return cy.get('select').eq(2).select('1')
+        return cy.get('select').eq(2).select('0')
     }
     getAssessSubj()
     {
-        return cy.get('select').eq(3).select('0')
+        return cy.get('select').eq(3).select('3')
     }
     getAssessDifficulty()
     {
@@ -316,37 +316,27 @@ class DataEntry
     {
         return cy.get('.fa-calendar').eq(1)
     }
-    getPushCalender1()
+    getStartCalender()
     {
         return cy.get('.fa-calendar').eq(0)
     }
-    getPushCalender2()
+    getEndCalender()
     {
         return cy.get('.fa-calendar').eq(1)
     }
-    getDateandTime()
+    getActiveDate(date)
     {
-        return cy.get('.datetimepicker .table-condensed tr:nth-child(4) td')
+        return cy
+          .get("td.day:not(.disabled):not(.future):not(.past)")
+          .contains(String(date));
     }
-    getDateandTime1()
+    getCalenderHour(data)
     {
-        return cy.get('.datetimepicker .table-condensed tr:nth-child(5) td')
+        return cy.get(".hour:not(disabled)").contains(String(data));
     }
-    getCalenderHour()
+    getCalenderMinute(data)
     {
-        return cy.get('.hour:nth-child(18)')
-    }
-    getCalenderHour1()
-    {
-        return cy.get('.hour:nth-child(22)')
-    }
-    getCalenderMinute()
-    {
-        return cy.get('.minute:nth-child(10)')
-    }
-    getCalenderMinute1()
-    {
-        return cy.get('.minute:nth-child(10)')
+        return cy.get(".minute:not(disabled)").contains(String(data));
     }
     getPushedContent()
     {
@@ -366,7 +356,7 @@ class DataEntry
     }
     getSelectButton()
     {
-        return cy.get(':nth-child(3) > :nth-child(9) > .e-button')
+        return cy.get(':nth-child(1) > :nth-child(9) > .e-button')
     }
     getCurriculamTab()
     {
