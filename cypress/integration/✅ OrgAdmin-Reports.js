@@ -40,6 +40,7 @@ describe("Create and Push Activity", () => {
     cy.wait(4000);
     orgAdminPage.getReport("Content Usage (Hrs)")
     const pressFirstRow = () => {
+      //orgAdminPage.getGraph().trigger('mouseover')
       orgAdminPage
         .getReportsBody()
         .find('table[aria-label="purchases"]')

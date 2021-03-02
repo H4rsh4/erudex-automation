@@ -13,7 +13,7 @@ class StudentActivityPage {
     return cy.contains(chap);
   }
   getNoActivityMsg() {
-    return cy.contains("No Activities");
+    cy.contains("No Activities");
   }
   getChapterWithActs() {
     return cy.get(".assignment-chapter-count.pending").last().parent();
