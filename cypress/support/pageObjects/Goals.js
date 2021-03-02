@@ -10,7 +10,7 @@ class Goals
     }
     getSubject()
     {
-        return cy.get('select').eq(2).select('0')
+        return cy.get('select').eq(2).select('3')
     }
     getSection()
     {
@@ -22,7 +22,7 @@ class Goals
     }
     getSelectGoal1()
     {
-        return cy.get('select').eq(4).select('2')
+        return cy.get('select').eq(4).select('0')
     }
     getSetall()
     {
@@ -30,7 +30,7 @@ class Goals
     }
     getSelectGoal2()
     {
-        return cy.get('select').eq(5).select('1')
+        return cy.get('select').eq(5).select('0')
     }
     getSelectGoal3()
     {

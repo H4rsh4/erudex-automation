@@ -22,7 +22,7 @@ class Settings
     }
     getSettingsCls()
     {
-        return cy.get('select').eq(3).select('0')
+        return cy.get('select').eq(3).select('1')
     }
     getSettingsSection()
     {
@@ -30,7 +30,7 @@ class Settings
     }
     getStudntSettngs()
     {
-        return cy.get('select').eq(5).select('0')
+        return cy.get('select').eq(5).select('37')
     }
     getCancelSettings()
     {

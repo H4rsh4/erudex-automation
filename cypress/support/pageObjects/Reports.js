@@ -26,11 +26,11 @@ class Reports
     }
     getSubjects()
     {
-        return cy.get('select').eq(2).select('1')
+        return cy.get('select').eq(2).select('0')
     }
     getChapters()
     {
-        return cy.get('select').eq(3).select('5')
+        return cy.get('select').eq(3).select('1')
     }
     getPerformTopic()
     {
@@ -67,11 +67,11 @@ class Reports
     }
     getComparativesubjct()
     {
-        return cy.get('select').eq(1).select('3')
+        return cy.get('select').eq(1).select('0')
     }
     getComparativeChapter()
     {
-        return cy.get('select').eq(2).select('0')
+        return cy.get('select').eq(2).select('1')
     }
     getComparativetopics()
     {

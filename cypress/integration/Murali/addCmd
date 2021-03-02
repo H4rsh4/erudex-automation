@@ -1,8 +1,0 @@
-for file in $(find . -name "*.js"); do
-  echo Processing $file
-
-  cat beginning.txt $file > $file.modified
-
-  mv $file.modified $file
-
-done

@@ -14,7 +14,7 @@ class Grade
     }
     getSubject()
     {
-        return cy.get('select').eq(3).select('1')
+        return cy.get('select').eq(3).select('0')
     }
     getGradetype()
     {
@@ -22,7 +22,7 @@ class Grade
     }
     getChapter()
     {
-        return cy.get('select').eq(5).select('5')
+        return cy.get('select').eq(5).select('3')
     }
     getAssesmentName()
     {

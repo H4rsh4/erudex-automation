@@ -14,7 +14,7 @@ class Upload
     }
     getSubject()
     {
-        return cy.get('select').eq(2).select('0')
+        return cy.get('select').eq(2).select('3')
     }
     getChapter()
     {

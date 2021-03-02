@@ -14,11 +14,11 @@ class LessonPlan
     }
     getSubject()
     {
-        return cy.get('select').eq(3).select('1')
+        return cy.get('select').eq(3).select('3')
     }
     getChapter()
     {
-        return cy.get('select').eq(4).select('3')
+        return cy.get('select').eq(4).select('1')
     }
     getTopic()
     {
@@ -78,11 +78,11 @@ class LessonPlan
     }
     getViewsubject()
     {
-        return cy.get('select').eq(2).select('1')
+        return cy.get('select').eq(2).select('3')
     }
     getViewchapter()
     {
-        return cy.get('select').eq(3).select('2')
+        return cy.get('select').eq(3).select('1')
     }    
     getViewdate()
     {

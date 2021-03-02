@@ -18,7 +18,7 @@ class TeacherAssess
     }
     getSubject()
     {
-        return cy.get('select').eq(3).select('0')
+        return cy.get('select').eq(3).select('3')
     }
     getLevelDifficulty()
     {
@@ -62,11 +62,11 @@ class TeacherAssess
     }
     getChapter()
     {
-        return cy.get('select').eq(12).select('9')
+        return cy.get('select').eq(12).select('1')
     }
     getTopic()
     {
-        return cy.get('select').eq(13).select('2')
+        return cy.get('select').eq(13).select('4')
     }
     getDifficulty()
     {
@@ -142,11 +142,11 @@ class TeacherAssess
     }
     getViewSubject()
     {
-        return cy.get('select').eq(2).select('2')
+        return cy.get('select').eq(2).select('3')
     }
     getViewChapter()
     {
-        return cy.get('select').eq(3).select('0')
+        return cy.get('select').eq(3).select('1')
     }
     getViewDate()
     {
@@ -192,29 +192,19 @@ class TeacherAssess
     {
         return cy.get('.fa-calendar').eq(1)
     }
-    getDateandTime()
+    getActiveDate(date)
     {
-        return cy.get('.datetimepicker .table-condensed tr:nth-child(5) td')
+        return cy
+          .get("td.day:not(.disabled):not(.future):not(.past)")
+          .contains(String(date));
     }
-    getDateandTime1()
+    getCalenderHour(data)
     {
-        return cy.get('.datetimepicker .table-condensed tr:nth-child(5) td')
+        return cy.get(".hour:not(disabled)").contains(String(data));
     }
-    getCalenderHour()
+    getCalenderMinute(data)
     {
-        return cy.get('.hour:nth-child(18)')
-    }
-    getCalenderHour1()
-    {
-        return cy.get('.hour:nth-child(22)')
-    }
-    getCalenderMinute()
-    {
-        return cy.get('.minute:nth-child(10)')
-    }
-    getCalenderMinute1()
-    {
-        return cy.get('.minute:nth-child(10)')
+        return cy.get(".minute:not(disabled)").contains(String(data));
     }
     getCancel()
     {

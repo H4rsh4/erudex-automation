@@ -5,7 +5,7 @@ class Signin {
     }
     getPassword() 
     {
-      return cy.get('.login-form [type="password"]')
+      return cy.get('.login-form > .ng-pristine')
     }
     getSignin() 
     {
