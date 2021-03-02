@@ -1,0 +1,14 @@
+{
+  "teacherUsername": "eru.teacher4",
+  "teacherPassword": "eru.teacher4",
+  "studentUsername": "eru.raghupathi",
+  "studentPassword": "eru.raghupathi",
+  "URL": "https://demo-app.erudex.com/",
+  "qid":{
+    "111732" : "option_1",
+    "111960" : "option_2",
+    "111553" : "option_3",
+    "96218"  : "option_4",
+    "112047" : "option_1"
+  }
+}

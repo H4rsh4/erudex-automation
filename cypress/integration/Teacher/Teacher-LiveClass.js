@@ -1,1 +1,57 @@
-//Modify Student Live
+/// <reference types="Cypress" />
+import LiveCls from '../../support/pageObjects/LiveCls'
+const livecls = new LiveCls()
+const liveclas = require('../../fixtures/Liveclass.json')
+describe('My First Test Suite', function() 
+{
+    it('Signin', ()=>{
+        cy.Signin(liveclas.TeacherUserName,
+            liveclas.TeacherPassword);
+    })
+    it('Live-Class',function() {
+        cy.Curriculum()
+        cy.wait(2000)
+        livecls.getLiveClass()
+            .click()
+        livecls.getMonth()
+            .contains(liveclas.Month)
+                .click({force: true})
+        cy.contains(liveclas.week).click()
+        livecls.getInprogress()
+            .click({force:true})
+        livecls.getUnAttended()
+            .click({force:true})    
+        livecls.getLiveClassCreate()
+            .click()
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            return false
+        })
+        livecls.getCurriculum()
+            .contains(liveclas.Curriculum)
+        livecls.getClass()
+            .contains(liveclas.Class)
+        livecls.getSubject()
+            .contains(liveclas.Subject)
+        livecls.getChapter()
+            .contains(liveclas.Chapter)
+        livecls.getStartCalender()
+            .click()
+        livecls.getActiveDate(liveclas.pushDate1)
+            .click()
+        livecls.getCalenderHour(liveclas.pushHour1)
+            .click()
+        livecls.getCalenderMinute(liveclas.pushMin1)
+            .click()
+        livecls.getDuration()
+            .contains(liveclas.Duration)
+                .click({force: true})
+        livecls.getCheckbox()
+            .check()
+                .should('be.checked')
+        livecls.getSchedule()
+            .click()                        
+    })
+    it('Logout', ()=>{
+        cy.Logout()
+    })    
+})    
