@@ -1,13 +1,13 @@
 /// <reference types="Cypress" />
-import Grade from '../../support/pageObjects/Grade'
+import LiveCls from '../../support/pageObjects/LiveClass'
 import 'cypress-wait-until';
-const grade = new Grade()
-const grading = require('../../fixtures/Grading.json')
+const livecls = new LiveCls()
+const liveclas = require('../../fixtures/Liveclass.json')
 describe('My First Test Suite', function() 
 {
     it('Signin', ()=>{
-        cy.Signin(grading.TeacherUserName,
-                  grading.TeacherPassword);
+        cy.Signin(liveclas.TeacherUserName,
+            liveclas.TeacherPassword);
         cy.get('.success').click()
       });
     it('Reach-Grade', ()=>{
@@ -54,6 +54,24 @@ describe('My First Test Suite', function()
         cy.wait('@PageActivityData')
 
         cy.get('select').eq(3).select('3').contains('Physics')
+        livecls.getChapter()
+            .contains(liveclas.Chapter)
+        livecls.getStartCalender()
+            .click()
+        livecls.getActiveDate(liveclas.pushDate1)
+            .click()
+        livecls.getCalenderHour(liveclas.pushHour1)
+            .click()
+        livecls.getCalenderMinute(liveclas.pushMin1)
+            .click()
+        livecls.getDuration()
+            .contains(liveclas.Duration)
+                .click({force: true})
+        livecls.getCheckbox()
+            .check()
+                .should('be.checked')
+        livecls.getSchedule()
+            .click()
         
     })
     it('Logout', ()=>{
