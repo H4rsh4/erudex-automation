@@ -24,6 +24,7 @@ describe("Create Activity", function () {
         pathname: "/userActivity/addPageActivity"
     }).as('PageActivityData')
     cy.Curriculum();
+    // cy.wait('@PageActivityData')
     ActivityPage.getCreateActivity().click({ force: true });
     cy.wait('@PageActivityData')
     ActivityPage.getName().type(activityData.name);
@@ -31,10 +32,11 @@ describe("Create Activity", function () {
     cy.wait('@Curr-Data')
     ActivityPage.getSubject().contains(activityData.Subject);
     ActivityPage.getChapter().contains(activityData.Chapter);
-    cy.wait(2000);
+    cy.waitUntil(()=> true).wait(500)
     ActivityPage.getSubjectTopics()
       .contains(activityData.Topic)
       .click({ force: true });
+    cy.waitUntil(()=> true).wait(500)
     ActivityPage.getSubjectTopics()
       .contains(activityData.SubTopic)
       .click({ force: true });
@@ -68,6 +70,7 @@ describe("Create Activity", function () {
     }).as('PageActivityData')
     ActivityPage.getViewActivity().click({ force: true });
     ActivityPage.getClass().contains(activityData.Class);
+    cy.wait('@PageActivityData')
     ActivityPage.getSubject().contains(activityData.Subject);
     ActivityPage.getChapter().contains(activityData.Chapter);
     ActivityPage.getSelectDate().contains(activityData.CreatedDate);

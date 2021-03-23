@@ -6,9 +6,14 @@ const grading = require('../../fixtures/Grading.json')
 describe('My First Test Suite', function() 
 {
     it('Signin', ()=>{
+        cy.intercept({
+            pathname: "/user/validateUser"
+        }).as('validateUser')
         cy.Signin(grading.TeacherUserName,
                   grading.TeacherPassword);
+        cy.wait('@validateUser')          
         cy.get('.success').click()
+        
       });
     it('Reach-Grade', ()=>{
         cy.intercept({
@@ -20,7 +25,9 @@ describe('My First Test Suite', function()
         cy.intercept({
             pathname: "/userActivity/addPageActivity"
         }).as('PageActivityData')
-      
+        cy.intercept({
+            pathname: "/ErudexWebService/rest/user/getSectionsForTeacherByGrade"
+        }).as('TeacherByGrade')
         //cy.waitForResourceToLoad()
         cy.get(".dash-blk > .icon-live-classes").click();
         cy.wait('@LC-Data')
@@ -51,7 +58,7 @@ describe('My First Test Suite', function()
         })
 
         cy.get('select').eq(2).select('1').contains('Class 12')
-        cy.wait('@PageActivityData')
+        cy.wait('@TeacherByGrade')
 
         cy.get('select').eq(3).select('3').contains('Physics')
         

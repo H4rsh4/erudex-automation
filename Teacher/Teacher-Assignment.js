@@ -23,16 +23,16 @@ describe("Teacher Assignment", () => {
     AssignmentPage.getCreateAssignment().click({force:true});
     AssignmentPage.getName().type(assessmentPage.name);
     AssignmentPage.getClass().contains(assessmentPage.Class);
+    cy.wait('@Curr-Data')
     AssignmentPage.getSubject().contains(assessmentPage.Subject);
-    //cy.wait('@Curr-Data')
     AssignmentPage.getChapter().contains(assessmentPage.Chapter);
-    //cy.wait('@Upload')
-    cy.wait(2000);
+    // cy.wait('@Upload')
+    cy.waitUntil(()=> true).wait(500)
     AssignmentPage.getSubjectTopics()
       .contains(assessmentPage.Topic)
       .click({ force: true });
-    //cy.wait('@Upload')
-    cy.wait(2000);
+    // cy.wait('@Upload')
+    cy.waitUntil(()=> true).wait(500)
     AssignmentPage.getSubjectTopics()
       .contains(assessmentPage.SubTopic)
       .click({ force: true });
@@ -53,8 +53,8 @@ describe("Teacher Assignment", () => {
   });
   it("View Assignment", function () {
     cy.intercept({
-      pathname: "/ErudexWebService/rest/file/uploadFiles"
-    }).as('Upload')
+      pathname: "/ErudexWebService/rest/assignment/getUserAssignmentsByCriteria"
+    }).as('getUserAssignment')
     cy.intercept({
       pathname: "/user/getUserCurriculum"
     }).as('Curr-Data')
@@ -63,6 +63,7 @@ describe("Teacher Assignment", () => {
     }).as('PageActivityData')
     AssignmentPage.getViewAssignment().click({force:true});
     AssignmentPage.getClass().contains(assessmentPage.Class);
+    // cy.wait('@Curr-Data')
     AssignmentPage.getSubject().contains(assessmentPage.Subject);
     AssignmentPage.getChapter().contains(assessmentPage.Chapter);
     AssignmentPage.getSelectDate().contains(assessmentPage.CreatedDate);
@@ -77,7 +78,7 @@ describe("Teacher Assignment", () => {
         $e1.click();
       }
     });
-    cy.wait('@PageActivityData')
+    cy.wait('@getUserAssignment')
     AssignmentPage.getBack().click();
     cy.wait('@PageActivityData')
   });

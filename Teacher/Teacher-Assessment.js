@@ -23,9 +23,9 @@ describe("Teacher Assessment", function () {
     AssessmentPage.getClass().contains(assessmentData.Class);
     cy.wait('@Curr-Data')
     AssessmentPage.getSubject().contains(assessmentData.Subject);
-    cy.wait(1000);
+    //cy.wait(1000);
     AssessmentPage.getLevelDifficulty().contains(assessmentData.Difficulty);
-    cy.wait(1000);
+    //cy.wait(1000);
     AssessmentPage.getDuration().contains(assessmentData.Duration);
     AssessmentPage.getMarks().contains(assessmentData.Marks);
     cy.contains(assessmentData.usepremode).click();
@@ -43,7 +43,7 @@ describe("Teacher Assessment", function () {
   });
   it("Create Assessment Select Questions", function () {
     cy.intercept({
-      pathname: "/ErudexWebService/rest/assessment/search"
+      pathname: "/ErudexWebService/rest/question/search"
     }).as('search')
     cy.intercept({
       pathname: "/ErudexWebService/rest/question/getMcqHistory"
@@ -54,9 +54,9 @@ describe("Teacher Assessment", function () {
     AssessmentPage.getSelectQstns().click();
     cy.wait('@search')
     AssessmentPage.getChapter().contains(assessmentData.chaptr1);
-    // cy.wait('@search')
+    cy.wait('@search')
     AssessmentPage.getTopic().contains(assessmentData.topic);
-    // cy.wait('@search')
+    cy.wait('@search')
     AssessmentPage.getDifficulty().contains(assessmentData.difficulty);
     AssessmentPage.getquestiontype().contains(assessmentData.typeqstn);
     // AssessmentPage.getSkillType().contains(assessmentData.Skill);
@@ -146,8 +146,9 @@ describe("Teacher Assessment", function () {
         $e1.click();
       }
     });
-    cy.wait('@PageActivityData')
+    cy.wait('@AssessmentsByCriteria')
     AssessmentPage.getBack().click();
+    cy.wait('@PageActivityData')
   });
   it("Log out", () => {
     cy.Logout();
