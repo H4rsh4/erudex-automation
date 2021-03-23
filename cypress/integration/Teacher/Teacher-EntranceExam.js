@@ -11,6 +11,12 @@ describe('My First Test Suite', function()
             cred.TeacherPassword);
      }); 
     it('NEET Exam',function() {
+        cy.intercept({
+            pathname: "/userActivity/addPageActivity"
+        }).as('PageActivityData')
+	    cy.intercept({
+            pathname: "/ErudexWebService/rest/resource/getContentUrl"
+        }).as('ContentUrl')
         cy.Curriculum()
         EntrancePage.getNEETexam()
             .click({force:true})
@@ -24,16 +30,23 @@ describe('My First Test Suite', function()
             .click()
         cy.contains(entranceData.RelatedChapter)
             .click()
+        cy.wait('@PageActivityData')
         cy.contains('>')
-            .click({force: true})// next pdf page
+            .click()// next pdf page
         cy.contains('+')
-            .click({force: true})
+            .click()
         cy.contains(entranceData.FitPage)
             .click()
         EntrancePage.getNavigateback()
             .click()
     })
     it('EAMCET',function() {
+        cy.intercept({
+            pathname: "/userActivity/addPageActivity"
+        }).as('PageActivityData')
+	    cy.intercept({
+            pathname: "/ErudexWebService/rest/resource/getContentUrl"
+        }).as('ContentUrl')
         EntrancePage.getEAMCETexam()
             .click({force:true})
         EntrancePage.getSubMathematics1()
@@ -48,16 +61,23 @@ describe('My First Test Suite', function()
             .click({force:true})
         cy.contains(entranceData.RelatedChapter1)
             .click()
+        cy.wait('@PageActivityData')
         cy.contains('>')
-            .click({force: true})// next pdf page
+            .click()// next pdf page
         cy.contains('+')
-            .click({force: true})
+            .click()
         cy.contains(entranceData.FitPage)
             .click()
         EntrancePage.getNavigateback()
             .click()
     })
     it('IIT-JEE Mains',function() {
+        cy.intercept({
+            pathname: "/userActivity/addPageActivity"
+        }).as('PageActivityData')
+	    cy.intercept({
+            pathname: "/ErudexWebService/rest/resource/getContentUrl"
+        }).as('ContentUrl')
         EntrancePage.getIITexam()
             .click({force:true})
         EntrancePage.getSubMathematics()
@@ -72,10 +92,11 @@ describe('My First Test Suite', function()
             .click()
         cy.contains(entranceData.RelatedChapter)
             .click()
+        cy.wait('@PageActivityData')
         cy.contains('>')
-            .click({force: true})// next pdf page
+            .click()// next pdf page
         cy.contains('+')
-            .click({force: true})
+            .click()
         cy.contains(entranceData.FitPage)
             .click()
         EntrancePage.getNavigateback()

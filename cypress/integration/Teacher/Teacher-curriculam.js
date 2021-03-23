@@ -21,7 +21,7 @@ describe("Curriculum", function () {
     CurriculumPage.getarrowleft().click();
     CurriculumPage.getarrowleft().click();
     CurriculumPage.getrefresh().click();
-    cy.contains(curriclumData.Chapter1).click({ force: true });
+    cy.contains(curriclumData.Chapter1).click();
     cy.wait(10000);
     CurriculumPage.getPdfNext().click();
     CurriculumPage.getPdfZoomOut().click();

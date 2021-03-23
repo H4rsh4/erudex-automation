@@ -7,25 +7,42 @@ const cred = require("../../fixtures/Credentials.json");
 const activityData = require("../../fixtures/Activity.json");
 
 describe("Create Activity", function () {
-  it("Signin", () => {
-    cy.Signin(cred.TeacherUserName, cred.TeacherPassword);
-  });
-  it("Create Activity", function () {
+    it("Signin", () => {
+      cy.Signin(cred.TeacherUserName, cred.TeacherPassword);
+    });
+    it("Create Activity", function () {
+    cy.intercept({
+        pathname: "/ErudexWebService/rest/file/uploadFiles"
+    }).as('Upload')
+    cy.intercept({
+        pathname: "/user/getUserCurriculum"
+    }).as('Curr-Data')
+    cy.intercept({
+        pathname: "/ErudexWebService/rest/assignment/pushAssignment"
+    }).as('pushAssignment')
+    cy.intercept({
+        pathname: "/userActivity/addPageActivity"
+    }).as('PageActivityData')
     cy.Curriculum();
+    // cy.wait('@PageActivityData')
     ActivityPage.getCreateActivity().click({ force: true });
+    cy.wait('@PageActivityData')
     ActivityPage.getName().type(activityData.name);
     ActivityPage.getClass().contains(activityData.Class);
+    cy.wait('@Curr-Data')
     ActivityPage.getSubject().contains(activityData.Subject);
     ActivityPage.getChapter().contains(activityData.Chapter);
-    cy.wait(2000);
+    cy.waitUntil(()=> true).wait(500)
     ActivityPage.getSubjectTopics()
       .contains(activityData.Topic)
       .click({ force: true });
+    cy.waitUntil(()=> true).wait(500)
     ActivityPage.getSubjectTopics()
       .contains(activityData.SubTopic)
       .click({ force: true });
     ActivityPage.getDescription().type(activityData.Description);
-    ActivityPage.getCreateActivtyPush().click({ force: true });
+    ActivityPage.getCreateActivtyPush().click();
+    cy.wait('@Upload')
     ActivityPage.getCheckbox().check().should("be.checked");
     //cy.get('[ng-click="cancelPush()"]').click()
     ActivityPage.getStartCalender().click();
@@ -39,8 +56,21 @@ describe("Create Activity", function () {
     ActivityPage.getCancel().click();
   });
   it("View Activity", function () {
+    cy.intercept({
+      pathname: "/ErudexWebService/rest/file/uploadFiles"
+    }).as('Upload')
+    cy.intercept({
+        pathname: "/user/getUserCurriculum"
+    }).as('Curr-Data')
+    cy.intercept({
+        pathname: "/ErudexWebService/rest/assignment/pushAssignment"
+    }).as('pushAssignment')
+    cy.intercept({
+      pathname: "/userActivity/addPageActivity"
+    }).as('PageActivityData')
     ActivityPage.getViewActivity().click({ force: true });
     ActivityPage.getClass().contains(activityData.Class);
+    cy.wait('@PageActivityData')
     ActivityPage.getSubject().contains(activityData.Subject);
     ActivityPage.getChapter().contains(activityData.Chapter);
     ActivityPage.getSelectDate().contains(activityData.CreatedDate);
@@ -55,7 +85,9 @@ describe("Create Activity", function () {
         $e1.click();
       }
     });
+    cy.wait('@PageActivityData')
     ActivityPage.getBack().click();
+    cy.wait('@PageActivityData')
   });
   it("Log out", () => {
     cy.Logout();

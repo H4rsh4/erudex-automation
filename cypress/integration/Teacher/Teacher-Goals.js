@@ -11,11 +11,21 @@ describe('My First Test Suite', function()
             cred.TeacherPassword);
      }); 
     it('Goals',function() {
+        cy.intercept({
+            pathname: "/user/getUserCurriculum"
+        }).as('Curr-Data')
+        cy.intercept({
+            pathname: "/userActivity/addPageActivity"
+        }).as('PageActivityData')
+        cy.intercept({
+            pathname: "/ErudexWebService/rest/goal/getTargetGoalDetail"
+        }).as('TargetGoalDetail')
         cy.Curriculum()  
         GoalsPage.getGoals()
             .click()
         GoalsPage.getClass()
             .contains(goalData.Class)
+        cy.wait('@Curr-Data')
         GoalsPage.getSubject()
             .contains(goalData.Subject)
         GoalsPage.getSection()
@@ -27,6 +37,7 @@ describe('My First Test Suite', function()
                 $e1.click()
             }
         })
+        cy.wait('@PageActivityData')
         GoalsPage.getGoalName()
             .type(goalData.name)
         GoalsPage.getSelectGoal1()
@@ -43,7 +54,7 @@ describe('My First Test Suite', function()
             .click({ multiple: true })
         GoalsPage.getsavegoal()
             .click()
-        //cy.Logout()
+        cy.wait('@TargetGoalDetail')
     })
     it('Logout', ()=>{
         cy.Logout()
