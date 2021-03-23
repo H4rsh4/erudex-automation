@@ -66,7 +66,7 @@ class DataEntry
     }
     getChapter()
     {
-        return cy.get('select').eq(13).select('1')
+        return cy.get('select',{timeout:1000}).eq(13).select('1')
     }
     getChapterQuiz()
     {
@@ -98,15 +98,15 @@ class DataEntry
     }
     getPastexam()
     {
-        return cy.get('select').eq(18).select('0')
+        return cy.get('select').eq(17).select('0')
     }
     getExamyear()
     {
-        return cy.get('select').eq(19).select('0')
+        return cy.get('select').eq(18).select('0')
     }
     getQstntype()
     {
-        return cy.get('select').eq(20).select('0')
+        return cy.get('select').eq(16).select('0')
     }
     getDescription()
     {

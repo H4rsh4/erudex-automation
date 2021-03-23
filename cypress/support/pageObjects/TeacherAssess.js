@@ -78,15 +78,15 @@ class TeacherAssess
     }
     getPastExam()
     {
-        return cy.get('select').eq(17).select('1')
+        return cy.get('select').eq(16).select('1')
     }
     getExamYear()
     {
-        return cy.get('select').eq(18).select('0')
+        return cy.get('select').eq(17).select('0')
     }
     getquestiontype()
     {
-        return cy.get('select').eq(19).select('1')
+        return cy.get('select').eq(15).select('1')
     }
     getDescription()
     {

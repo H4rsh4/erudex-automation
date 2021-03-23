@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import Signin from "../support/pageObjects/Signin.js";
-
+import 'cypress-wait-until';
 const CREDENTIALS = require("../fixtures/Credentials.json");
 
 Cypress.Commands.add("Curriculum", ()=>{
@@ -45,6 +45,7 @@ Cypress.Commands.add("Signin", (Username, Password) => {
     .type(Password)
     .should("have.value", Password);
   SignIn.getSubmit().click();
+  //SignIn.getSuccess().click()
 });
 
 //Logout Fx
@@ -56,6 +57,28 @@ Cypress.Commands.add("Logout", () => {
   cy.get('[ng-click="logout()"]').click({multiple:true,force:true});
 });
 
+Cypress.Commands.add('waitForResourceToLoad', (fileName, type) => {
+  const resourceCheckInterval = 0;
+
+  return new Cypress.Promise(resolve => {
+    const checkIfResourceHasBeenLoaded = () => {
+      const resource = cy.state('window')
+        .performance.getEntriesByType('resource')
+        .filter(entry => !type || entry.initiatorType === type)
+        .find(entry => entry.name.includes(fileName));
+
+      if (resource) {
+        resolve();
+
+        return;
+      }
+
+      setTimeout(checkIfResourceHasBeenLoaded, resourceCheckInterval);
+    };
+
+    checkIfResourceHasBeenLoaded();
+  });
+});
 //Sourced from cypress.io blog
 Cypress.Commands.add("goOnline", () => {
   cy.log("**go online**")
