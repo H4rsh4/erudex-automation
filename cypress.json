@@ -3,6 +3,8 @@
     "execTimeout": 100000,
     "pageLoadTimeout": 100000,
     "taskTimeout": 100000,
+    "requestTimeout":45000,
+    "responseTimeout": 45000,
     "env": {
       "url": "https://demo-app.erudex.com/"
     },

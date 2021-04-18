@@ -1,0 +1,30 @@
+Summer 2020:
+	Composition I	B
+Fall 2020:
+	Composition II	C
+	Fed GOVT		B
+	U.S Hist		B
+	PHIL			A
+	DRAM			A
+Wintermester 2020:
+	Hist 1302		A
+Spring 2021:
+	Psyc			A
+	Texas GOVT		A
+	prog I			A
+	Calc 1 | Pre-calc 
+Fall 2021:
+	Calc 2 | 1
+	Discrete maths
+	Prog 2
+Spring 2022:
+	Prog 3
+	Lin Alg | Discrete maths
+	Phys 1z
+
+	
+	
+Physics I II
+Calc I II
+Lin Alg
+Discrete

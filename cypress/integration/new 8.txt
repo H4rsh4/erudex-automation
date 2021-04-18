@@ -1,0 +1,10 @@
+assetto corza ideas
+
+mouse steering:
+	place mouse in the middle and move accordingly
+	
+pyautogui cmds:
+	.moveTo
+	.click //prolly useless
+	.press (for shifting and accelerating)
+	 

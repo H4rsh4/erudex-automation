@@ -32,9 +32,44 @@ Cypress.Commands.add("Curriculum", ()=>{
     
   cy.get('.icon-curriculum.dash-img').click()
 })
+
+Cypress.Commands.add('waitForResourceToLoad', (fileName, type) => {
+    const resourceCheckInterval = 40;
+  
+    return new Cypress.Promise(resolve => {
+      const checkIfResourceHasBeenLoaded = () => {
+        const resource = cy.state('window')
+          .performance.getEntriesByType('resource')
+          .filter(entry => !type || entry.initiatorType === type)
+          .find(entry => entry.name.includes(fileName));
+  
+        if (resource) {
+          resolve();
+  
+          return;
+        }
+  
+        setTimeout(checkIfResourceHasBeenLoaded, resourceCheckInterval);
+      };
+  
+      checkIfResourceHasBeenLoaded();
+    });
+  });
+
+
+
+
 //SignIn Function
 Cypress.Commands.add("Signin", (Username, Password) => {
   const SignIn = new Signin();
+
+  cy.intercept({
+    pathname: "/user/validateUser"
+  }).as("ValidateUser")
+  cy.intercept({
+    pathname:"/userActivity/addPageActivity"
+  }).as('IndexPage')
+
   cy.visit(CREDENTIALS.URL + "login/index.html?");
   SignIn.getUsername()
     .should("be.visible")
@@ -45,6 +80,12 @@ Cypress.Commands.add("Signin", (Username, Password) => {
     .type(Password)
     .should("have.value", Password);
   SignIn.getSubmit().click();
+  cy.wait('@ValidateUser').then((req)=>{
+    expect(req.response.statusCode).to.eq(200)
+  })
+  cy.wait('@IndexPage').then((req)=>{
+    expect(req.response.statusCode).to.eq(200)
+  })
 });
 
 //Logout Fx
@@ -52,8 +93,16 @@ Cypress.Commands.add("Logout", () => {
   /*
         Logs out after 2 secs 
     */
+  cy.intercept({
+    pathname: "/ErudexWebService/rest/user/userLogout"
+  }).as('userLogout')
   cy.wait(2000);
   cy.get('[ng-click="logout()"]').click({multiple:true,force:true});
+  cy.wait('@userLogout').then((req)=>[
+    expect(req.response.statusCode).to.eq(200)
+  ])
+  cy.url().should('eq', CREDENTIALS.URL + "login/index.html")
+  
 });
 
 //Sourced from cypress.io blog
