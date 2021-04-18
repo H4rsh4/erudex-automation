@@ -11,6 +11,9 @@ describe('My First Test Suite', function()
             cred.TeacherPassword);
      }); 
     it('Settings',function() {
+        cy.intercept({
+            pathname: "/ErudexWebService/rest/user/getSectionStudentList"
+        }).as('SectionStudentList')
         cy.Curriculum()
         SettingsPage.getSettings()
             .click()
@@ -26,6 +29,7 @@ describe('My First Test Suite', function()
             .contains(settingData.Class)
         SettingsPage.getSettingsSection()
             .contains(settingData.Section)
+        cy.wait('@SectionStudentList')
         SettingsPage.getStudntSettngs()
             .contains(settingData.pwdUser)
         SettingsPage.getCancelSettings()
@@ -36,7 +40,6 @@ describe('My First Test Suite', function()
             .type(settingData.Description)
         SettingsPage.getCancelFeedback()
             .click()
-        //cy.Logout()
     })
     it('Logout', ()=>{
         cy.Logout()

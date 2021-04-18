@@ -9,6 +9,21 @@ describe('My First Test Suite', function()
             Dataentry.Paswd);
      });
     it('Create Assessment Use Pre-Made',function() {
+        cy.intercept({
+            pathname: "/user/getUserCurriculum"
+        }).as('Curr-Data')
+        cy.intercept({
+            pathname: "/userActivity/addPageActivity"
+        }).as('PageActivityData')
+        cy.intercept({
+            pathname: "/ErudexWebService/rest/assessment/search"      
+        }).as('search')
+        cy.intercept({
+            pathname: "/ErudexWebService/rest/assessment/saveTeacherAssessment"
+        }).as('TeacherAssessment')
+        cy.intercept({
+            pathname: "/ErudexWebService/rest/assessment/pushAssessment"
+        }).as('pushAssessment')
         cy.Curriculum()
         DEntry.getCreateAssess()
             .click({force: true})
@@ -18,6 +33,7 @@ describe('My First Test Suite', function()
             .contains(Dataentry.Lang)
         DEntry.getAssessClass()
             .contains(Dataentry.Class)
+        cy.wait('@Curr-Data')
         DEntry.getAssessSubj()
             .contains(Dataentry.Subject)
         DEntry.getAssessDifficulty()
@@ -28,6 +44,7 @@ describe('My First Test Suite', function()
             .contains(Dataentry.Marks)
         cy.contains(Dataentry.usepremode)
             .click()
+        cy.wait('@search')
         DEntry.getName()
             .type(Dataentry.name)
         DEntry.getAssessLevel()
@@ -50,12 +67,15 @@ describe('My First Test Suite', function()
             .click({force:true})
         DEntry.getSelectquestions()
             .click()
+        cy.wait('@search')
         DEntry.getAddquestion3()
             .click({force: true})
         DEntry.getOK()
             .click()
+        // cy.wait('@search')
         DEntry.getCreateNdPush()
-            .click({force: true})
+            .click()
+        cy.wait('@TeacherAssessment')
         DEntry.getCheckbox()
             .check()
                 .should('be.checked')
@@ -77,6 +97,7 @@ describe('My First Test Suite', function()
             .click()
         DEntry.getSubmitPush()
             .click()
+        cy.wait('@pushAssessment')
     })
     it('Logout', ()=>{
         cy.Logout()
