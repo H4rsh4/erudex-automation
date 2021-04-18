@@ -11,7 +11,16 @@ describe('My First Test Suite', function()
         cy.Signin(cred.TeacherUserName,
             cred.TeacherPassword);
      }); 
-    it('Create Lesson Plan',function() {  
+    it('Create Lesson Plan',function() {
+        cy.intercept({
+            pathname: "/user/getUserCurriculum"
+        }).as('Curr-Data')
+        cy.intercept({
+            pathname: "/userActivity/addPageActivity"
+        }).as('PageActivityData')
+	    cy.intercept({
+            pathname: "/ErudexWebService/rest/lessonPlan/saveTeacherLessonPlan"
+        }).as('saveLessonPlan')  
         cy.Curriculum()
         LessonPlanPage.getCreateLesson()
             .click({force: true})
@@ -19,11 +28,12 @@ describe('My First Test Suite', function()
             .contains(lessonPlanData.Language)
         LessonPlanPage.getClass()
             .contains(lessonPlanData.Class)
+        cy.wait('@Curr-Data')
         LessonPlanPage.getSubject()
             .contains(lessonPlanData.Subject1)
         LessonPlanPage.getChapter()
             .contains(lessonPlanData.Chapter1)
-        cy.wait(2000)    
+        cy.wait(500)    
         LessonPlanPage.getTopic()
             .contains(lessonPlanData.Topic1)
                 .click({force: true})
@@ -69,18 +79,28 @@ describe('My First Test Suite', function()
             .click({force: true})
         LessonPlanPage.getCreateLessonPlan()
             .click()
+        cy.wait('@saveLessonPlan')
     })
     it('View Lesson Plan',function() {
+        cy.intercept({
+            pathname: "/user/getUserCurriculum"
+        }).as('Curr-Data')
+        cy.intercept({
+            pathname: "/userActivity/addPageActivity"
+        }).as('PageActivityData')
+	    cy.intercept({
+            pathname: "/ErudexWebService/rest/lessonPlan/getTeacherLessonPlansByCriteria"
+        }).as('PlansByCriteria')
         LessonPlanPage.getViewLessonPlan()
             .click({force: true})
-            cy.wait(2000)
+            // cy.wait(2000)
         LessonPlanPage.getViewClass()
             .contains(lessonPlanData.Class)
         LessonPlanPage.getViewsubject()
             .contains(lessonPlanData.Subject1)
         LessonPlanPage.getViewchapter()
             .contains(lessonPlanData.chapter1)
-            cy.wait(2000)
+            // cy.wait(2000)
         LessonPlanPage.getViewdate()
             .contains(lessonPlanData.StartDate)
         LessonPlanPage.getCalender1()
@@ -99,25 +119,23 @@ describe('My First Test Suite', function()
                 $e1.click()
             }
         })
-        cy.wait(2000)
+        cy.wait('@PlansByCriteria')
         cy.contains(lessonPlanData.LessonDelivery)
             .click({force: true})
-            cy.wait(2000)
+            // cy.wait(2000)
         cy.contains(lessonPlanData.LessonClosure)
             .click({force: true})
-            cy.wait(2000)
+            // cy.wait(2000)
         cy.contains(lessonPlanData.LearningObjectives)
             .click({force: true})
-            cy.wait(2000)
+            // cy.wait(2000)
         LessonPlanPage.getEditLesson()
             .click()
-            cy.wait(2000)
+        cy.wait('@PageActivityData')
         LessonPlanPage.getViewBack()
             .click()
-            cy.wait(2000)
-        LessonPlanPage.getViewBack()
-            .click()
-        //cy.Logout()
+        cy.wait('@PageActivityData')
+        
     })
     it('Logout', ()=>{
         cy.Logout()

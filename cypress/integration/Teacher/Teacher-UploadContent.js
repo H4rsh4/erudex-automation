@@ -11,6 +11,12 @@ describe('My First Test Suite', function()
             cred.TeacherPassword);
      });        
     it('Upload content',function() {
+        cy.intercept({
+            pathname: "/userActivity/addPageActivity"
+        }).as('PageActivityData')
+	    cy.intercept({
+            pathname: "/ErudexWebService/rest/user/getSectionsForTeacherByGrade"
+        }).as('TeacherByGrade')
         cy.Curriculum()
         UploadPage.getUploadContent()
             .click()
@@ -18,15 +24,16 @@ describe('My First Test Suite', function()
             .type(uploadData.Content)
         UploadPage.getClass()
             .contains(uploadData.ContentCls)
+        cy.wait('@TeacherByGrade')
         UploadPage.getSubject()
             .contains(uploadData.Subject)
         UploadPage.getChapter()
             .contains(uploadData.ContentChpter)
-        cy.wait(1000)    
+        cy.waitUntil(()=> true).wait(500)
         UploadPage.getTopics()
             .contains(uploadData.ContentTopic)
                 .click({force: true})
-        cy.wait(1000)
+        cy.waitUntil(()=> true).wait(500)
         UploadPage.getTopics()
             .contains(uploadData.ContentSubTopic)
                 .click({force: true})
@@ -36,8 +43,7 @@ describe('My First Test Suite', function()
             .type(uploadData.Content)
         UploadPage.getCheckbox()
             .check()
-                .should('be.checked')  
-        //cy.Logout()
+                .should('be.checked')
     })
     it('Logout', ()=>{
         cy.Logout()
