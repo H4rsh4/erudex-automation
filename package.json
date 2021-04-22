@@ -1,24 +1,5 @@
 {
-  "name": "erudex-automation",
-  "version": "1.0.0",
-  "description": ".",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/H4rsh4/erudex-automation.git"
-  },
-  "author": "Harsha Addagada",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/H4rsh4/erudex-automation/issues"
-  },
-  "homepage": "https://github.com/H4rsh4/erudex-automation#readme",
   "devDependencies": {
-    "cypress": "^6.6.0",
-    "cypress-file-upload": "^5.0.2",
-    "cypress-wait-until": "^1.7.1"
+    "cypress": "^7.1.0"
   }
 }

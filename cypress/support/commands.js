@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import Signin from "../support/pageObjects/Signin.js";
-import 'cypress-wait-until';
+//import 'cypress-wait-until';
 const CREDENTIALS = require("../fixtures/Credentials.json");
 
 Cypress.Commands.add("Curriculum", ()=>{

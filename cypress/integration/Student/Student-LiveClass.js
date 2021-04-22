@@ -31,9 +31,7 @@ describe("Live classess", () => {
 
     //cy.waitForResourceToLoad('index.html', 'script');
     cy.get(".dash-blk > .icon-live-classes").click({ multiple: true });
-    cy.wait('@Curr-Data').then((req)=>[
-      expect(req.response.statusCode).to.eq(200)
-    ])
+    cy.wait('@Curr-Data').its('response.statusCode').should('eq', 200)
     cy.get(".nice-select").first().click({ force: true });
     cy.wait('@PageActivityData').then((req)=>[
       expect(req.response.statusCode).to.eq(200)
