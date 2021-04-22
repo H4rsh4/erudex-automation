@@ -16,12 +16,23 @@ const activityData = require("../../fixtures/Activity-Data.json");
 const CREDS = require("../../fixtures/Credentials.json");
 
 describe("Student Activity", () => {
+  before("beforeblock", ()=>{
+    cy.intercept({
+      pathname: "/user/getUserCurriculum"
+    }).as("CurriculumPageRequest")
+    cy.intercept({
+      pathname: "/userActivity/addPageActivity"
+    }).as("PageActivityRequest")
+
+  })
   it("Signin", () => {
     cy.Signin(CREDS.student.Username, CREDS.student.Password);
   });
   it("Reach Activity Page", () => {
     IP.getCurriculum().click();
+    cy.wait('@CurriculumPageRequest').its('response.statusCode').should('eq', 200)
     IP.getActivity().click();
+    cy.wait('@PageActivityRequest').its('response.statusCode').should('eq', 200)
   });
   it("Select a Subject from the group", () => {
     //select Physics
