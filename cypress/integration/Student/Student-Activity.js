@@ -16,13 +16,16 @@ const activityData = require("../../fixtures/Activity-Data.json");
 const CREDS = require("../../fixtures/Credentials.json");
 
 describe("Student Activity", () => {
-  before("beforeblock", ()=>{
+  beforeEach("beforeblock", ()=>{
     cy.intercept({
       pathname: "/user/getUserCurriculum"
     }).as("CurriculumPageRequest")
     cy.intercept({
       pathname: "/userActivity/addPageActivity"
     }).as("PageActivityRequest")
+    cy.intercept({ 
+      pathname: "/user/getStudentAssignments"
+    }).as("getStudentAssignments")
 
   })
   it("Signin", () => {
@@ -40,22 +43,12 @@ describe("Student Activity", () => {
     //Assert Chapters are visible
     ActivityPage.getChapterColumn().should("be.visible");
     //Select a chapter with pending activity //Atoms
+    cy.wait('@CurriculumPageRequest').its('response.statusCode').should('eq', 200)
   });
   it("Assert No activity message", () => {
     ActivityPage.getChapter(activityData.NoActivityChapter).click();
     ActivityPage.getNoActivityMsg().should("be.visible");
-    cy.on('uncaught:exception', (err, runnable) => {
-      expect(err.message).to.include("Cannot read property 'should' of undefined")
-  
-      // using mocha's async done callback to finish
-      // this test so we prove that an uncaught exception
-      // was thrown
-      done()
-  
-      // return false to prevent the error from
-      // failing this test
-      return false
-    })
+    cy.wait('@CurriculumPageRequest').its('response.statusCode').should('eq', 200)
   });
   it("Assert Icons are correct", () => {
     ActivityPage.getChapterWithActs().click();
@@ -82,7 +75,7 @@ describe("Student Activity", () => {
     //View resources
     ActivityPage.getResources().first().click();
     cy.wait(4000);
-    ActivityPage.getCloseResouce().click({force:true});
+    ActivityPage.getCloseResouce().click({force:true, multiple:true});
     /*Submit Assignment
         ActivityPage.getSubmit()
           .click()

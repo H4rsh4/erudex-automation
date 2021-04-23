@@ -38,8 +38,6 @@ describe('Create and Push Activity', ()=>{
             let te = $el.text();
             cy.log(te)
         })
-
-
     })
     
     it('Log Out', ()=>{
