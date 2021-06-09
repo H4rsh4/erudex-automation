@@ -1,17 +1,19 @@
 /// <reference types="Cypress" />
 import TeacherAssessmentPage from "../../support/pageObjects/TeacherAssessmentPage";
-import DataEntry from "../../support/pageObjects/DataEntry.js";
+import Mocktest from "../../support/pageObjects/MockTest"
+// import DataEntry from "../../support/pageObjects/DataEntry.js";
 //fixture data
 const assessmentData = require("../../fixtures/Assessment-data.json");
 const AssessmentPage = new TeacherAssessmentPage();
-const de = new DataEntry();
+// const de = new DataEntry();
+const mktest = new Mocktest();
 // const DEntry = new DataEntry();
 const Dataentry = require("../../fixtures/DatEntry.json");
 
 // Variables
 const institute = "Erudex QA Test  2 (ER-SCH0062)";
-const teachername = "eru.teacher2";
-const teacherpassword = "eru.teacher2";
+const teachername = "eru.teacher1";
+const teacherpassword = "eru.teacher1";
 const testname = "Mocktest using Cypress";
 const testtype = "Part Test";
 const grade = "Class 12";
@@ -35,67 +37,62 @@ describe("My First Test Suite", function () {
     cy.Signin(Dataentry.Username, Dataentry.Password);
   });
   it("Create Mock test", () => {
-    cy.get("#dropdownCompAssessment")
-      .find('[ui-sref="compAssessment.create"]')
+    mktest.getCreateMock()
       .contains("Create Mock")
       .click({ force: true });
-    cy.get('[ng-model="assessment.name"]').first().type(testname);
-    cy.get("select.form-control").eq(0).select(testtype);
-    cy.get('[ng-model="assessment.curriculum"]').select(curriculum);
-    cy.get('[ng-model="assessment.grade"]').select(grade);
-    cy.get('[ng-model="assessment.subject"]').select(subject);
-    cy.get('[ng-model="assessment.difficultyLevel"]').select(difficulty);
-    cy.get('[ng-model="assessment.duration"]').clear().type(duration);
-    cy.get('[ng-model="assessment.totalScore"]').clear().type(score);
-    cy.get('[ng-model="assessment.negativeMarkingValue"]')
-      .first()
-      .select(negativeval);
+    mktest.getAssessmentName().type(testname);
+    mktest.gettestType().select(testtype);
+    mktest.getCurriculum().select(curriculum);
+    mktest.getGrade().select(grade);
+    mktest.getSubject().select(subject);
+    mktest.getDifficulty().select(difficulty);
+    mktest.getDuration().type(duration);
+    mktest.getScore().type(score);
+    mktest.getNegativeVal().select(negativeval);
   });
   // it("Adding a new Question", () => {
-  //   cy.get('[ng-click="addNewQuestion()"]').click();
+  //   mktest.getAddNewquestion().click();
   //   cy.Adding_a_new_Question();
   //   // Testing all the buttons avilable
   //   //Clear Button
-  //   cy.get('[ng-click="clearAllInput()"]').click();
+  //   mktest.getClear().click();
   //   cy.Adding_a_new_Question();
   //   //Preview Button
-  //   cy.get('[ng-click="previewQuestion()"]').click();
-  //   cy.get('[ng-click="closeThisDialog()"]').click();
+  //   mktest.getPreview().click();
+  //   mktest.getPreviewClose().click();
   //   // Close Button
-  //   cy.get('[ng-click="close()"]').click();
+  //   mktest.getClose().click();
   //   // previewSaveQuestion
-  //   cy.get('[ng-click="addNewQuestion()"]').click();
+  //   mktest.getAddNewquestion().click();
   //   cy.Adding_a_new_Question();
-  //   cy.get('[ng-click="previewSaveQuestion()"]').click();
-  //   cy.get('[ng-click="closeThisDialog()"]').click();
+  //   mktest.getPreviewSave().click();
+  //   mktest.getPreviewClose().click();
   //   // Save Button
-  //   cy.get('[ng-click="saveQuestion()"]').click();
-  //   cy.get('[ng-click="close()"]').click();
+  //   mktest.getSaveQuestion().click();
+  //   mktest.getClose().click();
   // });
   it("Select Number of Questions and Press OK", () => {
-    cy.get('[ng-click="addQuestions()"]').click();
+    mktest.getSelectQuestion().click();
     // AssessmentPage.getManualSelection().click();
     cy.wait(5000);
     Cypress.on("uncaught:exception", (err, runnable) => {
       return false;
     });
-    cy.get('[ng-model="subject"]').select("0");
-    cy.get('[ng-click="applyFilter()"]').click();
-    cy.get('[ng-click="clearFilter()"]').click();
+    mktest.getallsubject().select("0");
+    mktest.getApplyFilter().click();
+    mktest.getClearFilter().click();
 
-    AssessmentPage.getQuestionsTable().each(($el, index, $list) => {
+    mktest.getQuestionsTable().each(($el, index, $list) => {
       cy.log(index);
       if (index >= assessmentData.numberOfQuestions) return;
       else $el.trigger("click");
       cy.wait(2000);
     });
-    AssessmentPage.getOkay().scrollIntoView().click({ force: true });
-    cy.get('[ng-click="saveAssessment()"]').click();
+    mktest.getOkay().scrollIntoView().click({ force: true });
+    mktest.getSaveAssessment().click();
   });
   it("Viewing the Mocktest", () => {
-    cy.get("#dropdownCompAssessment")
-      .find('[ui-sref="compAssessment.list"]')
-      .contains("View Mock")
+    mktest.getViewMock().contains("View Mock")
       .click({ force: true });
     cy.viewing_the_test(
       testname,
@@ -106,9 +103,9 @@ describe("My First Test Suite", function () {
       subject,
       difficulty
     );
-    cy.get('[for="include_erudex"]').click();
-    cy.get('[ng-click="clearFilter()"]').click();
-    cy.get('[for="include_erudex"]').click();
+    mktest.getIncludeErudex().click();
+    mktest.getClearFilter().click();
+    mktest.getIncludeErudex().click();
     cy.viewing_the_test(
       testname,
       testtype,
@@ -118,16 +115,15 @@ describe("My First Test Suite", function () {
       subject,
       difficulty
     );
-    cy.get('[ng-click="applyFilter()"]').click();
+    mktest.getApplyFilter().click();
   });
   it("Assign", () => {
-    cy.get('[ng-click="teacherAssign(rec, filter)"]')
-      .contains("Assign")
+    mktest.getTeacherAssign().contains("Assign")
       .first()
       .click();
-    cy.get('[ng-model="selectedInstitution"]').select(institute);
-    cy.get('[ng-model="selectedTeacher"]').select(teachername);
-    cy.get('[ng-click="positiveResponse()"]').click();
+    mktest.getInsitution().select(institute);
+    mktest.getTeacher().select(teachername);
+    mktest.getAssign().click();
     // Logout from Data Entry
     cy.Logout();
   });
@@ -135,17 +131,16 @@ describe("My First Test Suite", function () {
     cy.Signin(teachername, teacherpassword);
     cy.get(".competitive-btn").contains(curriculumbtn).click();
     cy.get("#mCSB_8_container > .ac-dash-list-item").contains(testname).click();
-    cy.get('[ng-click="negativeResponse()"]').click();
+    mktest.getCancelPublish().click();
     cy.get("#mCSB_8_container > .ac-dash-list-item").contains(testname).click();
-    cy.get('[ng-click="positiveResponse()"]').click();
+    mktest.getAssign().click();
     // Logout from Teacher
     cy.Logout();
   });
   it("Viewing the Mocktest", () => {
     cy.Signin(Dataentry.Username, Dataentry.Password);
 
-    cy.get("#dropdownCompAssessment")
-      .find('[ui-sref="compAssessment.list"]')
+    mktest.getViewMock()
       .contains("View Mock")
       .click({ force: true });
     cy.viewing_the_test(
@@ -157,33 +152,33 @@ describe("My First Test Suite", function () {
       subject,
       difficulty
     );
-    cy.get('[ng-click="applyFilter()"]').click();
-    cy.get('[ng-click="publishAssessment(rec, filter)"]').click();
+    mktest.getApplyFilter().click();
+    mktest.getManagePublish().click();
     //Date
 
     //Institution
-    cy.get("div.columns.text-left")
+    mktest.getSelectInstitute()
       .contains("Erudex QA Test 2")
       .click({ force: true });
     //Section
-    cy.get('[ng-model="sectionFilterText"]').type("A");
-    cy.get('[ng-click="selectSection(section)"]').first().click();
-    cy.get(".fa-calendar").last().click();
-    de.getActiveDate(date).click();
-    de.getCalenderHour(hour).click();
-    de.getCalenderMinute(minute).click();
-    // cy.get('[ng-click="negativeResponse()"]').click();
+    mktest.getTypeSection().type("A");
+    mktest.getselectSection().first().click();
+    mktest.getCalender().last().click();
+    mktest.getActiveDate(date).click();
+    mktest.getCalenderHour(hour).click();
+    mktest.getCalenderMinute(minute).click();
+    // mktest.getCancelPublish().click();
     // //Institution
-    // cy.get("div.columns.text-left")
+    // mktest.getSelectInstitute()
     //   .contains("Erudex QA Test 2")
     //   .click({ force: true });
     // //Section
-    // cy.get('[ng-model="sectionFilterText"]').clear().type("A");
-    // cy.get('[ng-click="selectSection(section)"]').first().click();
-    // cy.get(".fa-calendar").last().click();
-    // de.getActiveDate(date).click();
-    // de.getCalenderHour(hour).click();
-    // de.getCalenderMinute(minute).click();
-    cy.get('[ng-click="positiveResponse()"]').last().click({ force: true });
+    // mktest.getTypeSection().clear().type("A");
+    // mktest.getselectSection().first().click();
+    // mktest.getCalender().last().click();
+    // mktest.getActiveDate(date).click();
+    // mktest.getCalenderHour(hour).click();
+    // mktest.getCalenderMinute(minute).click();
+    mktest.getAssign().last().click({ force: true });
   });
 });
